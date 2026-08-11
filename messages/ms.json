@@ -72,6 +72,94 @@
       "github": "Terokai di GitHub"
     }
   },
+  "landing": {
+    "hero": {
+      "eyebrow": "Metaprotokol Bitcoin",
+      "title": "Kontrak pintar, ditambat pada Bitcoin.",
+      "lead": "Alkanes membawa kontrak pintar ke Bitcoin. Kontrak ditulis dalam WebAssembly, dan semua keadaan ditambat pada Bitcoin itu sendiri — tiada sidechain, tiada jambatan.",
+      "ctaPrimary": "Mula membina",
+      "ctaSecondary": "Baca dokumentasi"
+    },
+    "tracks": {
+      "title": "Dua jalan masuk",
+      "lead": "Pilih jalan yang sepadan dengan apa yang anda bina.",
+      "build": {
+        "eyebrow": "Jalan 01",
+        "title": "Bina di atas Alkanes",
+        "body": "Tulis kontrak dalam Rust, kompil ke WebAssembly, dan lebarkan ke Bitcoin. Dokumentasi merangkumi persediaan projek, storan, pengujian, dan pelebaran.",
+        "cta": "Sediakan projek kontrak"
+      },
+      "subfrost": {
+        "eyebrow": "Jalan 02",
+        "title": "Integrasikan sintetik SUBFROST",
+        "body": "frBTC ialah perwakilan sintetik Bitcoin pada Alkanes. Balut dan nyahbalut ia daripada CLI atau TypeScript SDK, dan baca token, kolam, baki, serta data pasaran melalui SUBFROST Data API.",
+        "cta": "Balut dan nyahbalut BTC"
+      }
+    },
+    "signup": {
+      "eyebrow": "Daftar pembina",
+      "title": "Daftar sebagai pembina Alkanes",
+      "lead": "Satu pendaftaran, satu identiti awam untuk kerja yang anda hasilkan di Alkanes.",
+      "includedLabel": "Termasuk semasa pendaftaran",
+      "laterLabel": "Akan datang",
+      "profile": {
+        "title": "Profil pembina",
+        "body": "Halaman untuk anda dan apa yang anda bina di Alkanes."
+      },
+      "directory": {
+        "title": "Penyenaraian direktori awam",
+        "body": "Profil anda disenaraikan dalam direktori awam pembina Alkanes."
+      },
+      "forum": {
+        "title": "Menyiarkan di forum",
+        "body": "Mulakan dan balas perbincangan dalam forum pembina."
+      },
+      "buildathon": {
+        "title": "Penyertaan Buildathon",
+        "body": "Sertai Buildathon sebagai pembina berdaftar."
+      },
+      "polls": {
+        "title": "Builder Polls",
+        "body": "Undian nasihat yang terbuka kepada pembina berdaftar. Bersifat nasihat sahaja — ia tidak menentukan tadbir urus protokol."
+      },
+      "ctaSoon": "Pendaftaran akan dibuka",
+      "ctaOpen": "Daftar sebagai pembina",
+      "noteSoon": "Pendaftaran belum dibuka.",
+      "noteOpen": "Pendaftaran telah dibuka."
+    },
+    "aries": {
+      "eyebrow": "Aries",
+      "cta": "Lihat apa yang Aries lakukan"
+    },
+    "tools": {
+      "title": "Alat dan ekosistem",
+      "lead": "Apa yang ada di laman ini hari ini.",
+      "docs": {
+        "title": "Dokumentasi",
+        "body": "Konsep, kontrak, JSON-RPC, dan rujukan REST."
+      },
+      "quickstart": {
+        "title": "Mula pantas",
+        "body": "Bina dan lebarkan kontrak pintar Alkane pertama anda."
+      },
+      "cli": {
+        "title": "CLI dan SDK",
+        "body": "alkanes-cli dan perpustakaan TypeScript @alkanes/ts-sdk."
+      },
+      "terminal": {
+        "title": "Terminal DIESEL",
+        "body": "Kalkulator strategi mint DIESEL."
+      },
+      "governance": {
+        "title": "Tadbir urus",
+        "body": "Cadangan dan undian untuk metaprotokol Alkanes."
+      },
+      "forum": {
+        "title": "Forum",
+        "body": "Rangkaian perbincangan tentang cadangan dan idea."
+      }
+    }
+  },
   "aries": {
     "hero": {
       "wordmark": "Aries",

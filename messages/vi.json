@@ -72,6 +72,94 @@
       "github": "Khám phá trên GitHub"
     }
   },
+  "landing": {
+    "hero": {
+      "eyebrow": "Giao thức meta Bitcoin",
+      "title": "Hợp đồng thông minh, neo vào Bitcoin.",
+      "lead": "Alkanes mang hợp đồng thông minh đến Bitcoin. Hợp đồng được viết bằng WebAssembly, và toàn bộ trạng thái được neo vào chính Bitcoin — không sidechain, không bridge.",
+      "ctaPrimary": "Bắt đầu xây dựng",
+      "ctaSecondary": "Đọc tài liệu"
+    },
+    "tracks": {
+      "title": "Hai lối vào",
+      "lead": "Chọn hướng phù hợp với thứ bạn đang xây dựng.",
+      "build": {
+        "eyebrow": "Hướng 01",
+        "title": "Xây dựng trên Alkanes",
+        "body": "Viết hợp đồng bằng Rust, biên dịch sang WebAssembly và triển khai lên Bitcoin. Tài liệu bao gồm thiết lập dự án, lưu trữ, kiểm thử và triển khai.",
+        "cta": "Thiết lập dự án hợp đồng"
+      },
+      "subfrost": {
+        "eyebrow": "Hướng 02",
+        "title": "Tích hợp tài sản tổng hợp SUBFROST",
+        "body": "frBTC là dạng biểu diễn tổng hợp của Bitcoin trên Alkanes. Bọc và mở bọc nó từ CLI hoặc TypeScript SDK, và đọc token, pool, số dư cùng dữ liệu thị trường qua SUBFROST Data API.",
+        "cta": "Bọc và mở bọc BTC"
+      }
+    },
+    "signup": {
+      "eyebrow": "Sổ đăng ký nhà phát triển",
+      "title": "Đăng ký làm nhà phát triển Alkanes",
+      "lead": "Một lần đăng ký, một danh tính công khai cho những gì bạn tạo ra trên Alkanes.",
+      "includedLabel": "Có ngay khi đăng ký",
+      "laterLabel": "Sắp có",
+      "profile": {
+        "title": "Hồ sơ nhà phát triển",
+        "body": "Một trang cho bạn và những gì bạn đang xây dựng trên Alkanes."
+      },
+      "directory": {
+        "title": "Hiển thị trong danh bạ công khai",
+        "body": "Hồ sơ của bạn được liệt kê trong danh bạ công khai các nhà phát triển Alkanes."
+      },
+      "forum": {
+        "title": "Đăng bài trên diễn đàn",
+        "body": "Mở và trả lời thảo luận trong diễn đàn nhà phát triển."
+      },
+      "buildathon": {
+        "title": "Tham gia Buildathon",
+        "body": "Tham gia Buildathon với tư cách nhà phát triển đã đăng ký."
+      },
+      "polls": {
+        "title": "Builder Polls",
+        "body": "Các cuộc bỏ phiếu tham vấn dành cho nhà phát triển đã đăng ký. Chỉ mang tính tham vấn — không quyết định quản trị giao thức."
+      },
+      "ctaSoon": "Sắp mở đăng ký",
+      "ctaOpen": "Đăng ký làm nhà phát triển",
+      "noteSoon": "Đăng ký chưa mở.",
+      "noteOpen": "Đăng ký đã mở."
+    },
+    "aries": {
+      "eyebrow": "Aries",
+      "cta": "Xem Aries làm gì"
+    },
+    "tools": {
+      "title": "Công cụ và hệ sinh thái",
+      "lead": "Những gì đã có trên trang này.",
+      "docs": {
+        "title": "Tài liệu",
+        "body": "Khái niệm, hợp đồng, JSON-RPC và tham chiếu REST."
+      },
+      "quickstart": {
+        "title": "Khởi động nhanh",
+        "body": "Xây dựng và triển khai hợp đồng thông minh Alkane đầu tiên của bạn."
+      },
+      "cli": {
+        "title": "CLI và SDK",
+        "body": "alkanes-cli và thư viện TypeScript @alkanes/ts-sdk."
+      },
+      "terminal": {
+        "title": "Terminal DIESEL",
+        "body": "Công cụ tính chiến lược mint DIESEL."
+      },
+      "governance": {
+        "title": "Quản trị",
+        "body": "Đề xuất và bỏ phiếu cho giao thức meta Alkanes."
+      },
+      "forum": {
+        "title": "Diễn đàn",
+        "body": "Các chủ đề thảo luận về đề xuất và ý tưởng."
+      }
+    }
+  },
   "aries": {
     "hero": {
       "wordmark": "Aries",

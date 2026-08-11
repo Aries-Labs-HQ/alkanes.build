@@ -72,6 +72,94 @@
       "github": "在 GitHub 上探索"
     }
   },
+  "landing": {
+    "hero": {
+      "eyebrow": "比特币元协议",
+      "title": "智能合约，锚定于比特币。",
+      "lead": "Alkanes 将智能合约带到比特币上。合约以 WebAssembly 编写，所有状态都锚定在比特币本身——没有侧链，没有跨链桥。",
+      "ctaPrimary": "开始构建",
+      "ctaSecondary": "阅读文档"
+    },
+    "tracks": {
+      "title": "两条入门路径",
+      "lead": "选择与你要构建的内容相匹配的路径。",
+      "build": {
+        "eyebrow": "路径 01",
+        "title": "在 Alkanes 上构建",
+        "body": "用 Rust 编写合约，编译为 WebAssembly，然后部署到比特币。文档涵盖项目设置、存储、测试和部署。",
+        "cta": "设置合约项目"
+      },
+      "subfrost": {
+        "eyebrow": "路径 02",
+        "title": "集成 SUBFROST 合成资产",
+        "body": "frBTC 是比特币在 Alkanes 上的合成表示。通过 CLI 或 TypeScript SDK 进行封装与解封装，并通过 SUBFROST Data API 读取代币、池、余额和市场数据。",
+        "cta": "封装与解封装 BTC"
+      }
+    },
+    "signup": {
+      "eyebrow": "构建者注册表",
+      "title": "注册成为 Alkanes 构建者",
+      "lead": "一次注册，为你在 Alkanes 上交付的工作建立公开身份。",
+      "includedLabel": "注册即包含",
+      "laterLabel": "即将推出",
+      "profile": {
+        "title": "构建者档案",
+        "body": "展示你以及你在 Alkanes 上所构建内容的页面。"
+      },
+      "directory": {
+        "title": "公开目录列表",
+        "body": "你的档案将列入 Alkanes 构建者公开目录。"
+      },
+      "forum": {
+        "title": "论坛发帖",
+        "body": "在构建者论坛中发起和回复讨论。"
+      },
+      "buildathon": {
+        "title": "Buildathon 参赛资格",
+        "body": "以注册构建者身份参加 Buildathon。"
+      },
+      "polls": {
+        "title": "Builder Polls",
+        "body": "面向注册构建者的咨询性投票。仅供参考——不决定协议治理。"
+      },
+      "ctaSoon": "注册即将开放",
+      "ctaOpen": "注册成为构建者",
+      "noteSoon": "注册尚未开放。",
+      "noteOpen": "注册已开放。"
+    },
+    "aries": {
+      "eyebrow": "Aries",
+      "cta": "了解 Aries 的作用"
+    },
+    "tools": {
+      "title": "工具与生态",
+      "lead": "本站目前已有的内容。",
+      "docs": {
+        "title": "文档",
+        "body": "概念、合约、JSON-RPC 和 REST 参考。"
+      },
+      "quickstart": {
+        "title": "快速入门",
+        "body": "构建并部署你的第一个 Alkane 智能合约。"
+      },
+      "cli": {
+        "title": "CLI 与 SDK",
+        "body": "alkanes-cli 与 @alkanes/ts-sdk TypeScript 库。"
+      },
+      "terminal": {
+        "title": "DIESEL 终端",
+        "body": "DIESEL 铸造策略计算器。"
+      },
+      "governance": {
+        "title": "治理",
+        "body": "Alkanes 元协议的提案与投票。"
+      },
+      "forum": {
+        "title": "论坛",
+        "body": "关于提案与想法的讨论主题。"
+      }
+    }
+  },
   "aries": {
     "hero": {
       "wordmark": "Aries",

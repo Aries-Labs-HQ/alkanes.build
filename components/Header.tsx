@@ -88,7 +88,7 @@ export function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6">
               <Link
-                href="/"
+                href="/dashboard"
                 className="text-[color:var(--sf-muted)] hover:text-[color:var(--sf-text)] transition-colors font-medium"
               >
                 {t("navigation.dashboard")}

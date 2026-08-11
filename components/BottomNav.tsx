@@ -5,7 +5,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { LayoutDashboard, Vote, MessageSquare, BookOpen, Sparkles } from "lucide-react";
 
 const NAV_ITEMS = [
-  { href: "/", icon: LayoutDashboard, labelKey: "navigation.dashboard" },
+  { href: "/dashboard", icon: LayoutDashboard, labelKey: "navigation.dashboard" },
   { href: "/governance", icon: Vote, labelKey: "navigation.governance" },
   { href: "/forum", icon: MessageSquare, labelKey: "navigation.forum" },
   { href: "/docs", icon: BookOpen, labelKey: "navigation.docs" },
@@ -20,10 +20,7 @@ export function BottomNav() {
     <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-[color:var(--sf-outline)] bg-[#0d0d0d]">
       <div className="flex items-center justify-around h-14">
         {NAV_ITEMS.map(({ href, icon: Icon, labelKey }) => {
-          const isActive =
-            href === "/"
-              ? pathname === "/" || pathname === ""
-              : pathname.startsWith(href);
+          const isActive = pathname.startsWith(href);
 
           return (
             <Link
