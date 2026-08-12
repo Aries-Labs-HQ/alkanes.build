@@ -523,3 +523,101 @@ enum NotificationType {
   PROPOSAL_ENDED  // Voting ended on a proposal
   NEW_DISCUSSION  // New discussion in watched category
 }
+
+// ===========================================================================
+// BUILDER REGISTRY
+//
+// Additive only. Every model here is namespaced — `Registry` prefix on the
+// Prisma model, `registry_` prefix on the table — so that a future rebuild of
+// the upstream backend cannot collide with it, and so that the whole registry
+// can be identified, exported or dropped as one unit.
+//
+// Identity is the numeric X user ID, which is immutable. The handle is a
+// SNAPSHOT taken at the time of the last write: handles are renameable and
+// re-registerable, so nothing may key off one.
+//
+// A builder has exactly one wallet at a time, but the wallet binding table is
+// APPEND-ONLY. A rotation writes a new row and marks the previous one
+// superseded; it never overwrites. The full history is retained and is public
+// by design — a wallet swap on a public identity should be visible.
+// ===========================================================================
+
+enum RegistryBuilderStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum RegistryWalletType {
+  SUBFROST
+  UNISAT
+  OTHER
+}
+
+enum RegistryBindingAction {
+  REGISTER
+  ROTATE
+}
+
+model RegistryBuilder {
+  id String @id @default(cuid())
+
+  // Canonical identity: the numeric X user ID. Held as a string because the
+  // value exceeds JavaScript's safe integer range, and because it is an
+  // identifier rather than a quantity — it is never arithmetic.
+  xUserId String @unique
+
+  // Snapshot of the handle at the time of the last write, for display only.
+  // NOT unique, NOT an identifier: handles are renameable and re-registerable.
+  xHandle          String
+  xHandleUpdatedAt DateTime @default(now())
+
+  status RegistryBuilderStatus @default(ACTIVE)
+
+  bindings RegistryWalletBinding[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([xHandle])
+  @@index([status])
+  @@map("registry_builder")
+}
+
+model RegistryWalletBinding {
+  id String @id @default(cuid())
+
+  builderId String
+  builder   RegistryBuilder @relation(fields: [builderId], references: [id], onDelete: Cascade)
+
+  // The wallet, and how it was proved.
+  address    String
+  walletType RegistryWalletType
+  signature  String             @db.Text
+
+  // The exact canonical message the signature was verified against, stored
+  // verbatim so a third party can re-verify the binding without having to
+  // reconstruct it — and so a format change cannot invalidate the record.
+  signedMessage String @db.Text
+
+  // Replay guard. Unique across the whole table, so one signed message can
+  // never be submitted twice, as either action.
+  nonce    String   @unique
+  issuedAt DateTime
+
+  action RegistryBindingAction
+
+  // Supersede chain. `supersededAt` null means this is the live binding; a
+  // partial unique index (see the migration) enforces at most one per builder
+  // and at most one claim on any given address.
+  supersededAt  DateTime?
+  supersedesId  String?                @unique
+  supersedes    RegistryWalletBinding? @relation("RegistrySupersede", fields: [supersedesId], references: [id], onDelete: SetNull)
+  supersededBy  RegistryWalletBinding? @relation("RegistrySupersede")
+
+  createdAt DateTime @default(now())
+
+  @@index([builderId])
+  @@index([address])
+  @@index([createdAt])
+  @@map("registry_wallet_binding")
+}

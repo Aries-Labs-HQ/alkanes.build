@@ -359,5 +359,51 @@
   "wallet": {
     "connected": "Connected",
     "connectWallet": "Connect Wallet"
+  },
+  "registry": {
+    "eyebrow": "Builder registry",
+    "title": "Register as an Alkanes builder",
+    "lead": "One registration, one public identity for the work you ship on Alkanes. Connect your X account, connect a Bitcoin wallet, and sign once to bind the two.",
+    "wizard": {
+      "loading": "Loading…",
+      "startOver": "Start over",
+      "steps": {
+        "x": "Connect X",
+        "wallet": "Connect wallet",
+        "sign": "Sign record",
+        "done": "Done"
+      },
+      "x": {
+        "title": "Connect your X account",
+        "body": "Your numeric X user ID is what the record is keyed on. Your handle is stored as a snapshot for display, so renaming it later does not break anything.",
+        "cta": "Connect X"
+      },
+      "wallet": {
+        "title": "Connect a Bitcoin wallet",
+        "body": "The wallet proves the record is yours. Nothing is spent and no transaction is built — the wallet is only asked to sign a message.",
+        "recommended": "Recommended",
+        "subfrost": "The recommended builder wallet. Signs BIP-322 messages and works with Alkanes and SUBFROST directly.",
+        "unisat": "The alternative. Also signs BIP-322 messages.",
+        "connect": "Connect",
+        "resumeNote": "Installing a wallet extension reloads the page. Your progress is saved in this browser, so you can come straight back here."
+      },
+      "sign": {
+        "title": "Sign the record",
+        "body": "One signature binds this wallet to your X account. The message names the action, so it can never be reused for anything else.",
+        "cta": "Sign and register"
+      },
+      "done": {
+        "title": "You are registered",
+        "body": "Your builder record is live. You can rotate the wallet later from this page; rotations are shown on the record.",
+        "cta": "Back to the site"
+      },
+      "errors": {
+        "xUnavailable": "X sign-in is not available yet.",
+        "notInstalled": "{wallet} is not installed in this browser.",
+        "walletFailed": "The wallet did not return an account.",
+        "signFailed": "The wallet did not return a signature.",
+        "registerFailed": "Registration failed."
+      }
+    }
   }
 }

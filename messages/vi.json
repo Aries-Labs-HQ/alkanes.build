@@ -359,5 +359,51 @@
   "wallet": {
     "connected": "Đã kết nối",
     "connectWallet": "Kết nối Ví"
+  },
+  "registry": {
+    "eyebrow": "Sổ đăng ký nhà phát triển",
+    "title": "Đăng ký làm nhà phát triển Alkanes",
+    "lead": "Một lần đăng ký, một danh tính công khai cho công việc bạn xây dựng trên Alkanes. Kết nối tài khoản X, kết nối ví Bitcoin, và ký một lần để liên kết cả hai.",
+    "wizard": {
+      "loading": "Đang tải…",
+      "startOver": "Bắt đầu lại",
+      "steps": {
+        "x": "Kết nối X",
+        "wallet": "Kết nối ví",
+        "sign": "Ký hồ sơ",
+        "done": "Hoàn tất"
+      },
+      "x": {
+        "title": "Kết nối tài khoản X của bạn",
+        "body": "ID người dùng X dạng số là khóa của hồ sơ. Tên người dùng chỉ được lưu như một bản chụp để hiển thị, nên đổi tên sau này không ảnh hưởng gì.",
+        "cta": "Kết nối X"
+      },
+      "wallet": {
+        "title": "Kết nối ví Bitcoin",
+        "body": "Ví dùng để chứng minh hồ sơ là của bạn. Không tiêu bất kỳ khoản nào và không tạo giao dịch — ví chỉ được yêu cầu ký một thông điệp.",
+        "recommended": "Khuyến nghị",
+        "subfrost": "Ví được khuyến nghị cho nhà phát triển. Ký thông điệp BIP-322 và hoạt động trực tiếp với Alkanes và SUBFROST.",
+        "unisat": "Lựa chọn thay thế. Cũng ký thông điệp BIP-322.",
+        "connect": "Kết nối",
+        "resumeNote": "Cài tiện ích ví sẽ tải lại trang. Tiến trình của bạn được lưu trong trình duyệt này, nên bạn có thể quay lại ngay."
+      },
+      "sign": {
+        "title": "Ký hồ sơ",
+        "body": "Một chữ ký liên kết ví này với tài khoản X của bạn. Thông điệp nêu rõ hành động, nên không thể dùng lại cho việc khác.",
+        "cta": "Ký và đăng ký"
+      },
+      "done": {
+        "title": "Bạn đã đăng ký",
+        "body": "Hồ sơ nhà phát triển của bạn đã hoạt động. Bạn có thể đổi ví sau từ trang này; các lần đổi sẽ hiển thị công khai trên hồ sơ.",
+        "cta": "Quay lại trang chủ"
+      },
+      "errors": {
+        "xUnavailable": "Đăng nhập X chưa khả dụng.",
+        "notInstalled": "{wallet} chưa được cài trong trình duyệt này.",
+        "walletFailed": "Ví không trả về tài khoản.",
+        "signFailed": "Ví không trả về chữ ký.",
+        "registerFailed": "Đăng ký thất bại."
+      }
+    }
   }
 }

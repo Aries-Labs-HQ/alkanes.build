@@ -359,5 +359,51 @@
   "wallet": {
     "connected": "已连接",
     "connectWallet": "连接钱包"
+  },
+  "registry": {
+    "eyebrow": "构建者注册表",
+    "title": "注册成为 Alkanes 构建者",
+    "lead": "一次注册，为你在 Alkanes 上的工作建立一个公开身份。连接你的 X 账号，连接一个比特币钱包，签名一次即可将两者绑定。",
+    "wizard": {
+      "loading": "加载中…",
+      "startOver": "重新开始",
+      "steps": {
+        "x": "连接 X",
+        "wallet": "连接钱包",
+        "sign": "签署记录",
+        "done": "完成"
+      },
+      "x": {
+        "title": "连接你的 X 账号",
+        "body": "记录以你的 X 数字用户 ID 为键。用户名仅作为快照保存用于显示，之后改名不会影响记录。",
+        "cta": "连接 X"
+      },
+      "wallet": {
+        "title": "连接比特币钱包",
+        "body": "钱包用于证明这条记录属于你。不会花费任何资金，也不会构建交易——只需要签署一条消息。",
+        "recommended": "推荐",
+        "subfrost": "推荐的构建者钱包。支持 BIP-322 消息签名，可直接配合 Alkanes 与 SUBFROST 使用。",
+        "unisat": "备选方案。同样支持 BIP-322 消息签名。",
+        "connect": "连接",
+        "resumeNote": "安装钱包扩展会重新加载页面。你的进度已保存在此浏览器中，可以直接返回继续。"
+      },
+      "sign": {
+        "title": "签署记录",
+        "body": "一次签名即可将该钱包与你的 X 账号绑定。消息中写明了动作，因此无法被挪作他用。",
+        "cta": "签名并注册"
+      },
+      "done": {
+        "title": "注册完成",
+        "body": "你的构建者记录已生效。之后可以在此页面轮换钱包；轮换记录会公开显示。",
+        "cta": "返回站点"
+      },
+      "errors": {
+        "xUnavailable": "X 登录尚未开放。",
+        "notInstalled": "此浏览器未安装 {wallet}。",
+        "walletFailed": "钱包未返回账户。",
+        "signFailed": "钱包未返回签名。",
+        "registerFailed": "注册失败。"
+      }
+    }
   }
 }

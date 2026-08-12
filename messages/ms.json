@@ -359,5 +359,51 @@
   "wallet": {
     "connected": "Disambungkan",
     "connectWallet": "Sambung Dompet"
+  },
+  "registry": {
+    "eyebrow": "Daftar pembina",
+    "title": "Daftar sebagai pembina Alkanes",
+    "lead": "Satu pendaftaran, satu identiti awam untuk kerja yang anda hasilkan di Alkanes. Sambungkan akaun X anda, sambungkan dompet Bitcoin, dan tandatangan sekali untuk mengikat kedua-duanya.",
+    "wizard": {
+      "loading": "Memuatkan…",
+      "startOver": "Mula semula",
+      "steps": {
+        "x": "Sambung X",
+        "wallet": "Sambung dompet",
+        "sign": "Tandatangan rekod",
+        "done": "Selesai"
+      },
+      "x": {
+        "title": "Sambungkan akaun X anda",
+        "body": "ID pengguna X berangka anda ialah kunci rekod ini. Nama pengguna disimpan sebagai petikan untuk paparan sahaja, jadi menukarnya kemudian tidak merosakkan apa-apa.",
+        "cta": "Sambung X"
+      },
+      "wallet": {
+        "title": "Sambungkan dompet Bitcoin",
+        "body": "Dompet membuktikan rekod ini milik anda. Tiada dana dibelanjakan dan tiada transaksi dibina — dompet hanya diminta menandatangani mesej.",
+        "recommended": "Disyorkan",
+        "subfrost": "Dompet pembina yang disyorkan. Menandatangani mesej BIP-322 dan berfungsi terus dengan Alkanes dan SUBFROST.",
+        "unisat": "Pilihan alternatif. Turut menandatangani mesej BIP-322.",
+        "connect": "Sambung",
+        "resumeNote": "Memasang sambungan dompet akan memuat semula halaman. Kemajuan anda disimpan dalam pelayar ini, jadi anda boleh terus kembali ke sini."
+      },
+      "sign": {
+        "title": "Tandatangan rekod",
+        "body": "Satu tandatangan mengikat dompet ini kepada akaun X anda. Mesej itu menamakan tindakannya, jadi ia tidak boleh digunakan semula untuk perkara lain.",
+        "cta": "Tandatangan dan daftar"
+      },
+      "done": {
+        "title": "Anda telah berdaftar",
+        "body": "Rekod pembina anda kini aktif. Anda boleh menukar dompet kemudian dari halaman ini; pertukaran akan dipaparkan pada rekod.",
+        "cta": "Kembali ke laman"
+      },
+      "errors": {
+        "xUnavailable": "Log masuk X belum tersedia.",
+        "notInstalled": "{wallet} tidak dipasang dalam pelayar ini.",
+        "walletFailed": "Dompet tidak memulangkan akaun.",
+        "signFailed": "Dompet tidak memulangkan tandatangan.",
+        "registerFailed": "Pendaftaran gagal."
+      }
+    }
   }
 }
