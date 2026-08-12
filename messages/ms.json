@@ -75,26 +75,11 @@
   "landing": {
     "hero": {
       "eyebrow": "Metaprotokol Bitcoin",
-      "title": "Kontrak pintar, ditambat pada Bitcoin.",
-      "lead": "Alkanes membawa kontrak pintar ke Bitcoin. Kontrak ditulis dalam WebAssembly, dan semua keadaan ditambat pada Bitcoin itu sendiri — tiada sidechain, tiada jambatan.",
+      "title": "Smart contracts on Bitcoin — Done right",
+      "lead": "Kontrak ialah WebAssembly, dilaksanakan terhadap keadaan Bitcoin. Tiada sidechain, tiada bridge.",
+      "leadStrong": "Pengindeks itu sendiri dikompilkan kepada WebAssembly, jadi keadaan protokol boleh disahkan dan dihasilkan semula.",
       "ctaPrimary": "Mula membina",
       "ctaSecondary": "Baca dokumentasi"
-    },
-    "tracks": {
-      "title": "Dua jalan masuk",
-      "lead": "Pilih jalan yang sepadan dengan apa yang anda bina.",
-      "build": {
-        "eyebrow": "Jalan 01",
-        "title": "Bina di atas Alkanes",
-        "body": "Tulis kontrak dalam Rust, kompil ke WebAssembly, dan lebarkan ke Bitcoin. Dokumentasi merangkumi persediaan projek, storan, pengujian, dan pelebaran.",
-        "cta": "Sediakan projek kontrak"
-      },
-      "subfrost": {
-        "eyebrow": "Jalan 02",
-        "title": "Integrasikan sintetik SUBFROST",
-        "body": "frBTC ialah perwakilan sintetik Bitcoin pada Alkanes. Balut dan nyahbalut ia daripada CLI atau TypeScript SDK, dan baca token, kolam, baki, serta data pasaran melalui SUBFROST Data API.",
-        "cta": "Balut dan nyahbalut BTC"
-      }
     },
     "signup": {
       "eyebrow": "Daftar pembina",
@@ -133,7 +118,8 @@
     },
     "tools": {
       "title": "Alat dan ekosistem",
-      "lead": "Apa yang ada di laman ini hari ini.",
+      "lead": "Permukaan untuk pembina alkanes.build. Setiap satu dibuka apabila ia sedia.",
+      "comingSoon": "Akan datang",
       "docs": {
         "title": "Dokumentasi",
         "body": "Konsep, kontrak, JSON-RPC, dan rujukan REST."

@@ -75,26 +75,11 @@
   "landing": {
     "hero": {
       "eyebrow": "比特币元协议",
-      "title": "智能合约，锚定于比特币。",
-      "lead": "Alkanes 将智能合约带到比特币上。合约以 WebAssembly 编写，所有状态都锚定在比特币本身——没有侧链，没有跨链桥。",
+      "title": "Smart contracts on Bitcoin — Done right",
+      "lead": "合约是 WebAssembly，直接针对比特币状态执行。没有侧链，没有跨链桥。",
+      "leadStrong": "索引器本身也编译为 WebAssembly，因此协议状态是可验证、可复现的。",
       "ctaPrimary": "开始构建",
       "ctaSecondary": "阅读文档"
-    },
-    "tracks": {
-      "title": "两条入门路径",
-      "lead": "选择与你要构建的内容相匹配的路径。",
-      "build": {
-        "eyebrow": "路径 01",
-        "title": "在 Alkanes 上构建",
-        "body": "用 Rust 编写合约，编译为 WebAssembly，然后部署到比特币。文档涵盖项目设置、存储、测试和部署。",
-        "cta": "设置合约项目"
-      },
-      "subfrost": {
-        "eyebrow": "路径 02",
-        "title": "集成 SUBFROST 合成资产",
-        "body": "frBTC 是比特币在 Alkanes 上的合成表示。通过 CLI 或 TypeScript SDK 进行封装与解封装，并通过 SUBFROST Data API 读取代币、池、余额和市场数据。",
-        "cta": "封装与解封装 BTC"
-      }
     },
     "signup": {
       "eyebrow": "构建者注册表",
@@ -133,7 +118,8 @@
     },
     "tools": {
       "title": "工具与生态",
-      "lead": "本站目前已有的内容。",
+      "lead": "面向构建者的功能界面。每一项在准备就绪后开放。",
+      "comingSoon": "即将推出",
       "docs": {
         "title": "文档",
         "body": "概念、合约、JSON-RPC 和 REST 参考。"

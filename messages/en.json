@@ -75,26 +75,11 @@
   "landing": {
     "hero": {
       "eyebrow": "Bitcoin metaprotocol",
-      "title": "Smart contracts, anchored to Bitcoin.",
-      "lead": "Alkanes brings smart contracts to Bitcoin. Contracts are WebAssembly, and all state is anchored to Bitcoin itself — no sidechains, no bridges.",
+      "title": "Smart contracts on Bitcoin — Done right",
+      "lead": "Contracts are WebAssembly, executing against Bitcoin state. No sidechains, no bridges.",
+      "leadStrong": "The indexer itself compiles to WebAssembly, so protocol state is verifiably reproducible.",
       "ctaPrimary": "Start building",
       "ctaSecondary": "Read the docs"
-    },
-    "tracks": {
-      "title": "Two ways in",
-      "lead": "Pick the track that matches what you are building.",
-      "build": {
-        "eyebrow": "Track 01",
-        "title": "Build on Alkanes",
-        "body": "Write contracts in Rust, compile them to WebAssembly, and deploy them to Bitcoin. The documentation covers project setup, storage, testing, and deployment.",
-        "cta": "Set up a contract project"
-      },
-      "subfrost": {
-        "eyebrow": "Track 02",
-        "title": "Integrate SUBFROST synthetics",
-        "body": "frBTC is a synthetic representation of Bitcoin on Alkanes. Wrap and unwrap it from the CLI or the TypeScript SDK, and read tokens, pools, balances, and market data through the SUBFROST Data API.",
-        "cta": "Wrap and unwrap BTC"
-      }
     },
     "signup": {
       "eyebrow": "Builder registry",
@@ -133,7 +118,8 @@
     },
     "tools": {
       "title": "Tools and ecosystem",
-      "lead": "What is on this site today.",
+      "lead": "Builder surfaces for alkanes.build. Each one opens as it is ready.",
+      "comingSoon": "Coming soon",
       "docs": {
         "title": "Documentation",
         "body": "Concepts, contracts, JSON-RPC, and REST reference."

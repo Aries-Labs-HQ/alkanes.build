@@ -75,26 +75,11 @@
   "landing": {
     "hero": {
       "eyebrow": "비트코인 메타프로토콜",
-      "title": "비트코인에 고정되는 스마트 컨트랙트.",
-      "lead": "Alkanes는 스마트 컨트랙트를 비트코인으로 가져옵니다. 컨트랙트는 WebAssembly이며, 모든 상태는 비트코인 자체에 고정됩니다 — 사이드체인도, 브릿지도 없습니다.",
+      "title": "Smart contracts on Bitcoin — Done right",
+      "lead": "컨트랙트는 WebAssembly이며, 비트코인 상태를 대상으로 실행됩니다. 사이드체인도, 브리지도 없습니다.",
+      "leadStrong": "인덱서 자체가 WebAssembly로 컴파일되므로 프로토콜 상태를 검증 가능하게 재현할 수 있습니다.",
       "ctaPrimary": "빌드 시작하기",
       "ctaSecondary": "문서 읽기"
-    },
-    "tracks": {
-      "title": "두 가지 시작 경로",
-      "lead": "지금 만들고 있는 것에 맞는 경로를 선택하세요.",
-      "build": {
-        "eyebrow": "경로 01",
-        "title": "Alkanes 위에서 빌드하기",
-        "body": "Rust로 컨트랙트를 작성하고 WebAssembly로 컴파일한 뒤 비트코인에 배포하세요. 문서는 프로젝트 설정, 스토리지, 테스트, 배포를 다룹니다.",
-        "cta": "컨트랙트 프로젝트 설정"
-      },
-      "subfrost": {
-        "eyebrow": "경로 02",
-        "title": "SUBFROST 합성자산 연동",
-        "body": "frBTC는 Alkanes 위의 비트코인 합성 표현입니다. CLI 또는 TypeScript SDK로 랩핑·언랩핑하고, SUBFROST Data API로 토큰, 풀, 잔액, 시장 데이터를 조회하세요.",
-        "cta": "BTC 랩핑과 언랩핑"
-      }
     },
     "signup": {
       "eyebrow": "빌더 레지스트리",
@@ -133,7 +118,8 @@
     },
     "tools": {
       "title": "도구와 생태계",
-      "lead": "현재 이 사이트에 있는 것들.",
+      "lead": "alkanes.build의 빌더 화면입니다. 각 항목은 준비되는 대로 열립니다.",
+      "comingSoon": "출시 예정",
       "docs": {
         "title": "문서",
         "body": "개념, 컨트랙트, JSON-RPC, REST 레퍼런스."
