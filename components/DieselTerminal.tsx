@@ -1947,10 +1947,18 @@ const DieselTerminal = () => {
     return () => clearInterval(interval);
   }, [mempoolStats?.minFee]); // Re-run when minFee changes
 
-  // Current time state for elapsed time calculation (updates every second)
-  const [currentTime, setCurrentTime] = useState(Math.floor(Date.now() / 1000));
+  // Current time, for the header clock and elapsed-time readouts.
+  //
+  // Starts null and is only ever set from an effect. Reading the clock during
+  // render would put one time in the server's HTML and a different one in the
+  // browser's first render, which is a hydration mismatch (React #418) — it was
+  // invisible only while the wallet provider withheld every page from the
+  // server. There is no correct starting value to share, so both sides render
+  // nothing until the client has mounted.
+  const [currentTime, setCurrentTime] = useState<number | null>(null);
 
   useEffect(() => {
+    setCurrentTime(Math.floor(Date.now() / 1000));
     const interval = setInterval(() => {
       setCurrentTime(Math.floor(Date.now() / 1000));
     }, 1000);
@@ -1966,10 +1974,12 @@ const DieselTerminal = () => {
     return `${hours}h ${mins}m`;
   };
 
-  const blockElapsed = blockTime ? currentTime - blockTime : null;
+  const blockElapsed = blockTime && currentTime !== null ? currentTime - blockTime : null;
 
-  const now = new Date();
-  const timestamp = now.toLocaleTimeString('en-US', { hour12: false }) + ' UTC';
+  const timestamp =
+    currentTime === null
+      ? ''
+      : new Date(currentTime * 1000).toLocaleTimeString('en-US', { hour12: false }) + ' UTC';
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-[#b0b0b0] font-mono p-2 sm:p-4 text-xs sm:text-sm overflow-x-hidden selection:bg-orange-500/30">
