@@ -1,15 +1,21 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { WalletProvider } from "@/context/WalletContext";
 
-// Detect network from environment or hostname
-function detectNetwork(): "mainnet" | "testnet" | "signet" | "regtest" {
-  if (typeof window === "undefined") {
-    return (process.env.NEXT_PUBLIC_NETWORK as any) || "mainnet";
-  }
+type DetectedNetwork = "mainnet" | "testnet" | "signet" | "regtest";
 
+// The configured network, and the only value used for the first render. It is
+// the same on the server and in the browser, so it cannot mismatch during
+// hydration.
+function configuredNetwork(): DetectedNetwork {
+  return (process.env.NEXT_PUBLIC_NETWORK as DetectedNetwork) || "mainnet";
+}
+
+// Hostname-derived network. This can only be evaluated in the browser, so it is
+// applied after mount rather than during render.
+function detectNetworkFromHostname(): DetectedNetwork {
   const hostname = window.location.hostname;
 
   if (hostname.includes("signet") || hostname.includes("staging")) {
@@ -21,12 +27,8 @@ function detectNetwork(): "mainnet" | "testnet" | "signet" | "regtest" {
   if (hostname.includes("regtest")) {
     return "regtest";
   }
-  // localhost uses NEXT_PUBLIC_NETWORK env variable
-  if (hostname.includes("localhost")) {
-    return (process.env.NEXT_PUBLIC_NETWORK as any) || "mainnet";
-  }
-
-  return (process.env.NEXT_PUBLIC_NETWORK as any) || "mainnet";
+  // localhost, and anything else, uses NEXT_PUBLIC_NETWORK
+  return configuredNetwork();
 }
 
 export function Providers({ children }: { children: ReactNode }) {
@@ -47,7 +49,15 @@ export function Providers({ children }: { children: ReactNode }) {
       })
   );
 
-  const network = detectNetwork();
+  // First render uses the configured network on both sides of hydration; the
+  // hostname refinement lands in an effect, and only when it actually differs
+  // (so the wallet provider is not re-initialised for nothing).
+  const [network, setNetwork] = useState<DetectedNetwork>(configuredNetwork);
+
+  useEffect(() => {
+    const detected = detectNetworkFromHostname();
+    setNetwork((current) => (current === detected ? current : detected));
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

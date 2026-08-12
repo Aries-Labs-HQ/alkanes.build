@@ -2,7 +2,6 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useContext, useMemo, useState, useCallback, useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
 
 // Pre-load WASM module to ensure webpack bundles it
 // This must be imported before the SDK to ensure the module is available
@@ -717,14 +716,13 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
     ]
   );
 
-  if (isInitializing) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center bg-background">
-        <Loader2 size={32} className="animate-spin text-primary" />
-      </div>
-    );
-  }
-
+  // The provider never gates its children. Wallet discovery is a client-only
+  // concern — it needs localStorage, sessionStorage and an injected extension,
+  // none of which exist on the server — so holding the whole tree behind it
+  // meant every server-rendered response carried a spinner and no page content.
+  // Children render immediately, on the server and on the first client render
+  // alike, and `isInitializing` is published on the context so the few
+  // components that actually care can show their own progressive state.
   return (
     <WalletContext.Provider value={contextValue}>
       {children}
