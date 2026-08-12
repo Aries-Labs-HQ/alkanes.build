@@ -538,7 +538,7 @@ interface MempoolBlock {
 
 const DieselTerminal = () => {
   // Wallet state
-  const { isConnected, address, account, network, hasStoredKeystore, unlockWallet, restoreWallet, createWallet, signTaprootPsbt, disconnect, wallet } = useWallet();
+  const { isConnected, address, account, network, hasStoredKeystore, unlockWallet, restoreWallet, createWallet, signTaprootPsbt, disconnect, wallet, keystoreEnabled } = useWallet();
   const publicKey = account?.taproot?.pubkey || "";
   const { data: balances, refetch: refetchBalances } = useWalletBalances(address);
   const [showConnectModal, setShowConnectModal] = useState(false);
@@ -2350,17 +2350,63 @@ const DieselTerminal = () => {
         <div className="tracking-wider">TURBO DIESEL TERMINAL <span className="text-[#505050] italic">v12</span></div>
       </div>
 
-      {/* Connect Wallet Modal */}
-      <TerminalConnectModal
-        isOpen={showConnectModal}
+      {/* Connect Wallet Modal.
+          The terminal is keystore-only: its auto-mint signs chains of
+          transactions unattended from a taproot key derived from the session
+          mnemonic, which no browser extension will do without prompting each
+          time. When the keystore is disabled there is therefore nothing to
+          offer, and saying so plainly beats showing a create-wallet flow that
+          would refuse. */}
+      {keystoreEnabled ? (
+        <TerminalConnectModal
+          isOpen={showConnectModal}
         onClose={() => setShowConnectModal(false)}
         onUnlock={handleUnlock}
         onRestore={handleRestore}
         onCreate={handleCreate}
-        hasKeystore={hasStoredKeystore}
-        isLoading={walletLoading}
-        error={walletError}
-      />
+          hasKeystore={hasStoredKeystore}
+          isLoading={walletLoading}
+          error={walletError}
+        />
+      ) : (
+        showConnectModal && (
+          <div
+            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowConnectModal(false)}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0a0a0a] border border-orange-500/50 max-w-md w-full font-mono"
+            >
+              <div className="flex items-center justify-between px-4 py-2 border-b border-[#252525] bg-[#0d0d0d]">
+                <span className="text-orange-500 font-bold text-sm tracking-wide">
+                  UNAVAILABLE
+                </span>
+                <button
+                  onClick={() => setShowConnectModal(false)}
+                  className="text-[#505050] hover:text-[#e0e0e0]"
+                >
+                  [X]
+                </button>
+              </div>
+              <div className="p-4 text-sm text-[#a0a0a0] space-y-3">
+                <div className="text-[#e0e0e0]">
+                  DIESEL minting is unavailable in this build.
+                </div>
+                <div>
+                  The terminal signs mint chains unattended, which needs a key
+                  held in the page. In-browser wallets are switched off here, so
+                  there is no key to sign with.
+                </div>
+                <div className="text-[#505050]">
+                  Nothing is generated and nothing is stored. SUBFROST and UniSat
+                  connect elsewhere on the site, but cannot drive this terminal.
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      )}
 
       {/* Deposit Modal */}
       {showDepositModal && address && (

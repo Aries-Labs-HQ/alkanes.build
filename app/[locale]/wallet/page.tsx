@@ -27,6 +27,8 @@ export default function WalletDashboardPage() {
     disconnect,
     onConnectModalOpenChange,
     hasStoredKeystore,
+    walletType,
+    injectedWalletId,
   } = useWallet();
 
   const [copied, setCopied] = useState<string | null>(null);
@@ -170,8 +172,15 @@ export default function WalletDashboardPage() {
     );
   }
 
-  const isKeystoreWallet = !!wallet && !browserWallet;
+  // An injected wallet (SUBFROST / UniSat) is neither: it holds its own keys
+  // like a browser extension, but it is reached through the registry adapter
+  // rather than the SDK, so it exposes an address and message signing only.
+  const isInjectedWallet = walletType === 'injected';
+  const isKeystoreWallet = !!wallet && !browserWallet && !isInjectedWallet;
   const isBrowserWallet = !!browserWallet;
+  const externalWalletLabel = isInjectedWallet
+    ? (injectedWalletId === 'SUBFROST' ? 'SUBFROST' : 'UniSat')
+    : (browserWallet?.info?.name || "Browser Wallet");
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8 w-full">
@@ -199,7 +208,7 @@ export default function WalletDashboardPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-[15px] font-semibold text-[color:var(--sf-text)]">
-                    {isBrowserWallet ? (browserWallet?.info?.name || "Browser Wallet") : "Keystore Wallet"}
+                    {isBrowserWallet || isInjectedWallet ? externalWalletLabel : "Keystore Wallet"}
                   </span>
                   {isBrowserWallet && browserWallet?.info?.icon && (
                     <img src={browserWallet.info.icon} alt="" className="w-5 h-5" />
@@ -484,7 +493,7 @@ export default function WalletDashboardPage() {
         )}
 
         {/* Browser Wallet Info */}
-        {isBrowserWallet && (
+        {(isBrowserWallet || isInjectedWallet) && (
           <div className="mb-6">
             <div className="mb-3 px-1">
               <h3 className="text-lg font-bold text-[color:var(--sf-text)]">Wallet Info</h3>
@@ -492,7 +501,7 @@ export default function WalletDashboardPage() {
             <div className="glass-card overflow-hidden" style={{ background: "#101010" }}>
               <div className="bg-[color:var(--sf-surface)] px-5 py-5">
                 <p className="text-[13px] text-[color:var(--sf-muted)]">
-                  Connected via <span className="text-[color:var(--sf-text)] font-medium">{browserWallet?.info?.name || "Browser Wallet"}</span> extension.
+                  Connected via <span className="text-[color:var(--sf-text)] font-medium">{externalWalletLabel}</span> extension.
                   Your keys are managed by the wallet.
                 </p>
                 {browserWallet?.info?.website && (

@@ -33,6 +33,9 @@ import {
   type UTXO,
 } from '@alkanes/ts-sdk';
 
+import { KEYSTORE_WALLET_ENABLED } from '@/lib/featureFlags';
+import { walletById, type WalletId } from '@/lib/registry/wallets';
+
 export type Network = 'mainnet' | 'testnet' | 'signet' | 'regtest';
 
 // Storage keys
@@ -41,7 +44,24 @@ const STORAGE_KEYS = {
   WALLET_NETWORK: 'alkanes_wallet_network',
   SESSION_MNEMONIC: 'alkanes_session_mnemonic',
   BROWSER_WALLET: 'alkanes_browser_wallet',
+  INJECTED_WALLET: 'alkanes_injected_wallet',
 } as const;
+
+/**
+ * The keystore wallet is only reachable when the flag allows it.
+ *
+ * `/terminal` needs it — it signs unattended transaction chains from a taproot
+ * key derived from the session mnemonic. Nothing else does, and the header's
+ * connect surface never offers it. When the flag is off these throw rather than
+ * silently doing nothing, so a caller that still expects a keystore finds out.
+ */
+function assertKeystoreEnabled() {
+  if (!KEYSTORE_WALLET_ENABLED) {
+    throw new Error(
+      'In-browser wallets are disabled. Connect SUBFROST or UniSat instead.'
+    );
+  }
+}
 
 // Map app network names to SDK network names
 function toSdkNetwork(network: Network): NetworkType {
@@ -78,8 +98,12 @@ type FormattedUtxo = {
   confirmations: number;
 };
 
-// Wallet type discriminator
-type WalletType = 'keystore' | 'browser' | null;
+// Wallet type discriminator.
+// 'injected' is a wallet reached through lib/registry/wallets.ts — SUBFROST or
+// UniSat. It provides an address and message signing, which is everything the
+// site's own surfaces need; PSBT work stays with the SDK-backed 'browser' path
+// and the keystore.
+type WalletType = 'keystore' | 'browser' | 'injected' | null;
 
 type WalletContextType = {
   // Connection state
@@ -110,6 +134,12 @@ type WalletContextType = {
   unlockWallet: (password: string) => Promise<void>;
   restoreWallet: (mnemonic: string, password: string) => Promise<void>;
   connectBrowserWallet: (walletInfo: BrowserWalletInfo) => Promise<void>;
+  /** Connect SUBFROST or UniSat through lib/registry/wallets.ts. */
+  connectInjectedWallet: (id: WalletId) => Promise<void>;
+  /** Which injected wallet is connected, if any. */
+  injectedWalletId: WalletId | null;
+  /** Is the in-browser keystore wallet available in this build at all? */
+  keystoreEnabled: boolean;
   disconnect: () => void;
   signPsbt: (psbtBase64: string) => Promise<string>;
   signTaprootPsbt: (psbtBase64: string) => Promise<string>;
@@ -149,6 +179,10 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
   // Store mnemonic for keystore operations
   const [currentMnemonic, setCurrentMnemonic] = useState<string | null>(null);
 
+  // Injected wallet (SUBFROST / UniSat) — address and message signing only.
+  const [injectedWalletId, setInjectedWalletId] = useState<WalletId | null>(null);
+  const [injectedAddress, setInjectedAddress] = useState<string>('');
+
   // Check for stored keystore and restore session on mount
   useEffect(() => {
     const initializeWallet = async () => {
@@ -162,6 +196,37 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
       console.log('[WalletContext] Preloading WASM...');
       await ensureWasmPreloaded();
       console.log('[WalletContext] WASM preloaded');
+
+      // Restore an injected wallet (SUBFROST / UniSat) without prompting.
+      // getAccounts() returns what the user already authorised for this origin,
+      // so a page load never pops the extension open.
+      const injectedId = sessionStorage.getItem(STORAGE_KEYS.INJECTED_WALLET) as WalletId | null;
+      if (injectedId) {
+        try {
+          const adapter = walletById(injectedId);
+          const [first] = await adapter.accounts();
+          if (first) {
+            setInjectedWalletId(injectedId);
+            setInjectedAddress(first);
+            setWalletType('injected');
+          } else {
+            // Locked, revoked, or a different account: forget it rather than
+            // showing a connected state the wallet will not honour.
+            sessionStorage.removeItem(STORAGE_KEYS.INJECTED_WALLET);
+          }
+        } catch (error) {
+          console.error('[WalletContext] Failed to restore injected wallet:', error);
+          sessionStorage.removeItem(STORAGE_KEYS.INJECTED_WALLET);
+        }
+      }
+
+      if (!KEYSTORE_WALLET_ENABLED) {
+        // Nothing below this point may run: no stored keystore is read, no
+        // mnemonic is restored, and nothing is written to storage.
+        console.log('[WalletContext] Keystore wallet disabled by feature flag');
+        setIsInitializing(false);
+        return;
+      }
 
       const stored = localStorage.getItem(STORAGE_KEYS.ENCRYPTED_KEYSTORE);
       console.log('[WalletContext] Has stored keystore:', !!stored);
@@ -318,6 +383,9 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
 
   // Primary address
   const primaryAddress = useMemo(() => {
+    if (walletType === 'injected') {
+      return injectedAddress;
+    }
     if (walletType === 'browser') {
       return browserAddress.address;
     }
@@ -325,22 +393,32 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
   }, [walletType, browserAddress, addresses]);
 
   const paymentAddress = useMemo(() => {
+    if (walletType === 'injected') {
+      return injectedAddress;
+    }
     if (walletType === 'browser') {
       return browserAddress.address;
     }
     return addresses.nativeSegwit.address;
-  }, [walletType, browserAddress, addresses]);
+  }, [walletType, browserAddress, addresses, injectedAddress]);
 
   const publicKey = useMemo(() => {
+    // The registry adapter reports no public key, and nothing needs one: the
+    // BIP-322 verifier derives the key from the address and refuses a supplied
+    // key that does not match it.
+    if (walletType === 'injected') {
+      return '';
+    }
     if (walletType === 'browser') {
       return browserAddress.publicKey;
     }
     // Use taproot pubkey if taproot address is primary, otherwise nativeSegwit
     return addresses.taproot.pubkey || addresses.nativeSegwit.pubkey;
-  }, [walletType, browserAddress, addresses]);
+  }, [walletType, browserAddress, addresses, injectedAddress]);
 
   // Create new wallet
   const createNewWallet = useCallback(async (password: string): Promise<{ mnemonic: string }> => {
+    assertKeystoreEnabled();
     const sdkNetwork = toSdkNetwork(network);
     const { keystore: encrypted, mnemonic } = await createKeystore(password, { network: sdkNetwork });
 
@@ -366,6 +444,7 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
 
   // Unlock existing wallet
   const unlockWalletFn = useCallback(async (password: string): Promise<void> => {
+    assertKeystoreEnabled();
     const encrypted = localStorage.getItem(STORAGE_KEYS.ENCRYPTED_KEYSTORE);
     if (!encrypted) {
       throw new Error('No wallet found. Please create or restore a wallet first.');
@@ -389,6 +468,7 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
 
   // Restore wallet from mnemonic
   const restoreWalletFn = useCallback(async (mnemonic: string, password: string): Promise<void> => {
+    assertKeystoreEnabled();
     const manager = new KeystoreManager();
     const trimmedMnemonic = mnemonic.trim();
 
@@ -435,10 +515,30 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
     sessionStorage.removeItem(STORAGE_KEYS.SESSION_MNEMONIC);
   }, [network]);
 
+  // Connect an injected wallet through the registry adapter (SUBFROST / UniSat).
+  // There is no SDK adapter for SUBFROST, so this is the only path that reaches
+  // it; UniSat goes the same way so the two behave identically.
+  const connectInjectedWalletFn = useCallback(async (id: WalletId): Promise<void> => {
+    const adapter = walletById(id);
+    const address = await adapter.connect();
+
+    setInjectedWalletId(id);
+    setInjectedAddress(address);
+    setClient(null);
+    setWalletType('injected');
+    setCurrentMnemonic(null);
+    setConnectedWalletInfo(null);
+
+    sessionStorage.setItem(STORAGE_KEYS.INJECTED_WALLET, id);
+    sessionStorage.removeItem(STORAGE_KEYS.BROWSER_WALLET);
+    sessionStorage.removeItem(STORAGE_KEYS.SESSION_MNEMONIC);
+  }, []);
+
   // Disconnect wallet
   const disconnect = useCallback(() => {
     sessionStorage.removeItem(STORAGE_KEYS.SESSION_MNEMONIC);
     sessionStorage.removeItem(STORAGE_KEYS.BROWSER_WALLET);
+    sessionStorage.removeItem(STORAGE_KEYS.INJECTED_WALLET);
 
     if (client) {
       client.disconnect().catch(console.error);
@@ -448,6 +548,8 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
     setWalletType(null);
     setCurrentMnemonic(null);
     setConnectedWalletInfo(null);
+    setInjectedWalletId(null);
+    setInjectedAddress('');
     setIsConnectModalOpen(false);
   }, [client]);
 
@@ -534,11 +636,14 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
 
   // Sign message
   const signMessage = useCallback(async (message: string): Promise<string> => {
+    if (injectedWalletId) {
+      return walletById(injectedWalletId).signMessage(message);
+    }
     if (!client) {
       throw new Error('Wallet not connected');
     }
     return client.signMessage(message);
-  }, [client]);
+  }, [client, injectedWalletId]);
 
   // Get balance using provider
   const getBalance = useCallback(async (): Promise<BalanceSummary> => {
@@ -648,7 +753,7 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
     () => ({
       isConnectModalOpen,
       onConnectModalOpenChange,
-      isConnected: !!client,
+      isConnected: !!client || !!injectedAddress,
       isInitializing,
 
       client,
@@ -668,6 +773,9 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
       unlockWallet: unlockWalletFn,
       restoreWallet: restoreWalletFn,
       connectBrowserWallet: connectBrowserWalletFn,
+      connectInjectedWallet: connectInjectedWalletFn,
+      injectedWalletId,
+      keystoreEnabled: KEYSTORE_WALLET_ENABLED,
       disconnect,
       signPsbt,
       signTaprootPsbt,
@@ -701,6 +809,9 @@ export function WalletProvider({ children, network }: WalletProviderProps) {
       unlockWalletFn,
       restoreWalletFn,
       connectBrowserWalletFn,
+      connectInjectedWalletFn,
+      injectedWalletId,
+      injectedAddress,
       disconnect,
       signPsbt,
       signTaprootPsbt,

@@ -36,6 +36,13 @@ export interface WalletAdapter {
   isAvailable(): boolean;
   /** Prompt for accounts, return the first. */
   connect(): Promise<string>;
+  /**
+   * Already-authorised accounts, WITHOUT prompting. Empty when the wallet is
+   * absent, locked, or has not been authorised for this origin. Used to restore
+   * a session on load: `connect()` would pop the extension open on every page
+   * view, which is not something a page load should do.
+   */
+  accounts(): Promise<string[]>;
   /** BIP-322 message signature, base64. */
   signMessage(message: string): Promise<string>;
 }
@@ -66,6 +73,17 @@ function makeAdapter(
       const address = accounts[0];
       if (!address) throw new Error(`${label} returned no account`);
       return address;
+    },
+    async accounts() {
+      const w = injected(id);
+      if (typeof w?.getAccounts !== "function") return [];
+      try {
+        return (await w.getAccounts()) ?? [];
+      } catch {
+        // Locked, or the origin was never authorised. Not an error worth
+        // surfacing on a page load — it just means "no session to restore".
+        return [];
+      }
     },
     async signMessage(message: string) {
       const w = injected(id);
