@@ -17,60 +17,10 @@
   },
   "navigation": {
     "dashboard": "Papan Pemuka",
-    "governance": "Tadbir Urus",
     "forum": "Forum",
     "docs": "Dokumentasi",
     "aries": "Aries",
     "github": "GitHub"
-  },
-  "home": {
-    "hero": {
-      "title": "ALKANES",
-      "subtitle": "Tadbir urus, bilik kebal hasil, dan dokumentasi untuk metaprotokol Alkanes di Bitcoin. Taruh, undi, dan bentuk masa depan DeFi Bitcoin.",
-      "viewProposals": "Lihat Cadangan",
-      "readDocs": "Baca Dokumentasi",
-      "getApiKey": "Dapatkan Kunci API"
-    },
-    "explore": {
-      "title": "Terokai DIESEL",
-      "governance": {
-        "title": "Tadbir Urus",
-        "description": "Undi cadangan dan bentuk hala tuju protokol"
-      },
-      "forum": {
-        "title": "Forum",
-        "description": "Bincang cadangan dan idea bersama komuniti"
-      },
-      "docs": {
-        "title": "Dokumentasi",
-        "description": "Pelajari cara membina dengan Alkanes"
-      },
-      "quickstart": {
-        "title": "Mula Pantas",
-        "description": "Deploy kontrak pintar pertama anda"
-      }
-    },
-    "features": {
-      "title": "Mengapa DIESEL?",
-      "security": {
-        "title": "Keselamatan Bitcoin",
-        "description": "Semua keadaan berlabuh pada Bitcoin. Tiada sidechain, tiada jambatan — hanya Bitcoin tulen."
-      },
-      "wasm": {
-        "title": "Runtime WASM",
-        "description": "Tulis kontrak pintar dalam Rust, kompil ke WebAssembly, deploy ke Bitcoin."
-      },
-      "governance": {
-        "title": "Tadbir Urus Komuniti",
-        "description": "Pemegang DIESEL mengundi peningkatan protokol, peruntukan perbendaharaan, dan banyak lagi."
-      }
-    },
-    "cta": {
-      "title": "Bersedia untuk menyertai?",
-      "description": "Sambung dompet anda untuk mengundi cadangan dan taruh token DIESEL anda.",
-      "viewProposals": "Lihat Cadangan Aktif",
-      "github": "Terokai di GitHub"
-    }
   },
   "landing": {
     "hero": {
@@ -136,10 +86,6 @@
         "title": "Terminal DIESEL",
         "body": "Kalkulator strategi mint DIESEL."
       },
-      "governance": {
-        "title": "Tadbir urus",
-        "body": "Cadangan dan undian untuk metaprotokol Alkanes."
-      },
       "forum": {
         "title": "Forum",
         "body": "Rangkaian perbincangan tentang cadangan dan idea."
@@ -200,35 +146,6 @@
     "orbitals": {
       "line": "Aries Orbitals — anda boleh membeli karya seninya; anda tidak boleh membeli rekodnya."
     }
-  },
-  "governance": {
-    "title": "Tadbir Urus DIESEL",
-    "subtitle": "Undi cadangan untuk membentuk masa depan Alkanes",
-    "createProposal": "Cipta Cadangan",
-    "filters": {
-      "all": "Semua",
-      "active": "Aktif",
-      "pending": "Menunggu",
-      "closed": "Ditutup"
-    },
-    "proposal": {
-      "by": "oleh",
-      "votes": "undi",
-      "vote": "undi",
-      "starts": "Bermula",
-      "diesel": "{amount} DIESEL",
-      "for": "Sokong",
-      "against": "Tolak"
-    },
-    "states": {
-      "ACTIVE": "Aktif",
-      "PENDING": "Menunggu",
-      "CLOSED": "Ditutup",
-      "EXECUTED": "Dilaksanakan",
-      "CANCELLED": "Dibatalkan"
-    },
-    "noProposals": "Tiada cadangan ditemui",
-    "error": "Gagal memuatkan cadangan"
   },
   "forum": {
     "title": "Perbincangan",
@@ -350,7 +267,6 @@
     "tagline": "Metaprotokol Alkanes",
     "links": {
       "documentation": "Dokumentasi",
-      "governance": "Tadbir Urus",
       "forum": "Forum",
       "github": "GitHub",
       "twitter": "Twitter",

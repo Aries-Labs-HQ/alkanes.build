@@ -282,12 +282,15 @@ export default function DiscussionPage({
                   </span>
                 </div>
               </div>
-              <Link
-                href={`/governance?proposal=${discussion.proposal.id}`}
+              {/* Governance lives at its canonical venue; this leaves the site. */}
+              <a
+                href="https://surtur.org/proposals"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-secondary text-sm px-4 py-2 rounded-lg"
               >
                 {t("forum.discussion.viewProposal")}
-              </Link>
+              </a>
             </div>
           </div>
         )}

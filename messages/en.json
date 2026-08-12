@@ -17,60 +17,10 @@
   },
   "navigation": {
     "dashboard": "Dashboard",
-    "governance": "Governance",
     "forum": "Forum",
     "docs": "Docs",
     "aries": "Aries",
     "github": "GitHub"
-  },
-  "home": {
-    "hero": {
-      "title": "ALKANES",
-      "subtitle": "Governance, vaults, and documentation for the Alkanes metaprotocol on Bitcoin. Stake, vote, and shape the future of Bitcoin DeFi.",
-      "viewProposals": "View Proposals",
-      "readDocs": "Read the Docs",
-      "getApiKey": "Get an API Key"
-    },
-    "explore": {
-      "title": "Explore DIESEL",
-      "governance": {
-        "title": "Governance",
-        "description": "Vote on proposals and shape the protocol"
-      },
-      "forum": {
-        "title": "Forum",
-        "description": "Discuss proposals and ideas with the community"
-      },
-      "docs": {
-        "title": "Documentation",
-        "description": "Learn how to build with Alkanes"
-      },
-      "quickstart": {
-        "title": "Quick Start",
-        "description": "Deploy your first smart contract"
-      }
-    },
-    "features": {
-      "title": "Why DIESEL?",
-      "security": {
-        "title": "Bitcoin Security",
-        "description": "All state is anchored to Bitcoin. No sidechains, no bridges - just Bitcoin."
-      },
-      "wasm": {
-        "title": "WASM Runtime",
-        "description": "Write smart contracts in Rust, compile to WebAssembly, deploy to Bitcoin."
-      },
-      "governance": {
-        "title": "Community Governed",
-        "description": "DIESEL holders vote on protocol upgrades, treasury allocation, and more."
-      }
-    },
-    "cta": {
-      "title": "Ready to participate?",
-      "description": "Connect your wallet to vote on proposals and stake your DIESEL tokens.",
-      "viewProposals": "View Active Proposals",
-      "github": "Explore on GitHub"
-    }
   },
   "landing": {
     "hero": {
@@ -136,10 +86,6 @@
         "title": "DIESEL terminal",
         "body": "A DIESEL mint strategy calculator."
       },
-      "governance": {
-        "title": "Governance",
-        "body": "Proposals and voting for the Alkanes metaprotocol."
-      },
       "forum": {
         "title": "Forum",
         "body": "Discussion threads on proposals and ideas."
@@ -199,68 +145,6 @@
     },
     "orbitals": {
       "line": "Aries Orbitals — you can buy the art; you can't buy the record."
-    }
-  },
-  "governance": {
-    "title": "DIESEL Governance",
-    "subtitle": "Vote on proposals to shape the future of Alkanes",
-    "createProposal": "Create Proposal",
-    "backToProposals": "Back to Proposals",
-    "proposalNotFound": "Proposal Not Found",
-    "proposalNotFoundDesc": "The proposal you're looking for doesn't exist or has been removed.",
-    "connectToVote": "Connect Wallet to Vote",
-    "castVote": "Cast Vote",
-    "voting": "Voting...",
-    "voted": "Voted",
-    "youVoted": "You voted for",
-    "posts": "posts",
-    "views": "views",
-    "filters": {
-      "all": "All",
-      "active": "Active",
-      "pending": "Pending",
-      "closed": "Closed"
-    },
-    "proposal": {
-      "by": "by",
-      "votes": "votes",
-      "vote": "vote",
-      "starts": "Starts",
-      "diesel": "{amount} DIESEL",
-      "for": "For",
-      "against": "Against",
-      "description": "Description",
-      "results": "Current Results",
-      "recentVotes": "Recent Votes",
-      "discussion": "Discussion",
-      "info": "Information",
-      "snapshot": "Snapshot",
-      "startDate": "Start Date",
-      "endDate": "End Date"
-    },
-    "states": {
-      "ACTIVE": "Active",
-      "PENDING": "Pending",
-      "CLOSED": "Closed",
-      "EXECUTED": "Executed",
-      "CANCELLED": "Cancelled"
-    },
-    "noProposals": "No proposals found",
-    "noVoters": "No voters found",
-    "error": "Failed to load proposals",
-    "tabs": {
-      "proposals": "Proposals",
-      "voters": "Voters"
-    },
-    "voters": {
-      "rank": "Rank",
-      "address": "Address",
-      "votingPower": "Voting Power",
-      "votes": "Votes"
-    },
-    "pagination": {
-      "previous": "Previous",
-      "next": "Next"
     }
   },
   "forum": {
@@ -383,7 +267,6 @@
     "tagline": "Alkanes Metaprotocol",
     "links": {
       "documentation": "Documentation",
-      "governance": "Governance",
       "forum": "Forum",
       "github": "GitHub",
       "twitter": "Twitter",

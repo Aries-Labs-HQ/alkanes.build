@@ -17,60 +17,10 @@
   },
   "navigation": {
     "dashboard": "控制台",
-    "governance": "治理",
     "forum": "论坛",
     "docs": "文档",
     "aries": "Aries",
     "github": "GitHub"
-  },
-  "home": {
-    "hero": {
-      "title": "ALKANES",
-      "subtitle": "Alkanes 元协议的治理中心、收益金库与技术文档。质押、投票，共同塑造比特币 DeFi 的未来。",
-      "viewProposals": "查看提案",
-      "readDocs": "阅读文档",
-      "getApiKey": "获取 API 密钥"
-    },
-    "explore": {
-      "title": "探索 DIESEL",
-      "governance": {
-        "title": "治理",
-        "description": "参与提案投票，共同塑造协议未来"
-      },
-      "forum": {
-        "title": "论坛",
-        "description": "与社区成员讨论提案与创意"
-      },
-      "docs": {
-        "title": "开发文档",
-        "description": "学习如何基于 Alkanes 构建应用"
-      },
-      "quickstart": {
-        "title": "快速开始",
-        "description": "部署您的第一个智能合约"
-      }
-    },
-    "features": {
-      "title": "为什么选择 DIESEL？",
-      "security": {
-        "title": "比特币级安全",
-        "description": "所有状态均锚定于比特币主网。无需侧链，无需跨链桥——纯粹的比特币原生。"
-      },
-      "wasm": {
-        "title": "WASM 运行时",
-        "description": "使用 Rust 编写智能合约，编译为 WebAssembly，部署至比特币网络。"
-      },
-      "governance": {
-        "title": "社区自治",
-        "description": "DIESEL 持有者投票决定协议升级、资金分配等重大事项。"
-      }
-    },
-    "cta": {
-      "title": "准备好参与了吗？",
-      "description": "连接钱包即可参与提案投票并质押您的 DIESEL 代币。",
-      "viewProposals": "查看进行中的提案",
-      "github": "在 GitHub 上探索"
-    }
   },
   "landing": {
     "hero": {
@@ -136,10 +86,6 @@
         "title": "DIESEL 终端",
         "body": "DIESEL 铸造策略计算器。"
       },
-      "governance": {
-        "title": "治理",
-        "body": "Alkanes 元协议的提案与投票。"
-      },
       "forum": {
         "title": "论坛",
         "body": "关于提案与想法的讨论主题。"
@@ -200,35 +146,6 @@
     "orbitals": {
       "line": "Aries Orbitals —— 艺术品可以买到，记录买不到。"
     }
-  },
-  "governance": {
-    "title": "DIESEL 治理",
-    "subtitle": "参与提案投票，共同塑造 Alkanes 的未来",
-    "createProposal": "创建提案",
-    "filters": {
-      "all": "全部",
-      "active": "进行中",
-      "pending": "待开始",
-      "closed": "已结束"
-    },
-    "proposal": {
-      "by": "发起人",
-      "votes": "票",
-      "vote": "票",
-      "starts": "开始于",
-      "diesel": "{amount} DIESEL",
-      "for": "支持",
-      "against": "反对"
-    },
-    "states": {
-      "ACTIVE": "进行中",
-      "PENDING": "待开始",
-      "CLOSED": "已结束",
-      "EXECUTED": "已执行",
-      "CANCELLED": "已取消"
-    },
-    "noProposals": "暂无提案",
-    "error": "加载提案失败"
   },
   "forum": {
     "title": "社区讨论",
@@ -350,7 +267,6 @@
     "tagline": "Alkanes 元协议",
     "links": {
       "documentation": "开发文档",
-      "governance": "治理",
       "forum": "论坛",
       "github": "GitHub",
       "twitter": "Twitter",

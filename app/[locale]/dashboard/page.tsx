@@ -2,7 +2,6 @@
 
 import { DieselPriceCard } from "@/components/DieselPriceCard";
 import { VaultPerformance } from "@/components/VaultPerformance";
-import { ActiveProposals } from "@/components/ActiveProposals";
 import { BlockActivity } from "@/components/BlockActivity";
 
 export default function DashboardPage() {
@@ -19,7 +18,6 @@ export default function DashboardPage() {
 
           {/* Right Column - Proposals & Vaults */}
           <div className="lg:col-span-2 space-y-6 min-w-0">
-            <ActiveProposals />
             <VaultPerformance />
           </div>
         </div>

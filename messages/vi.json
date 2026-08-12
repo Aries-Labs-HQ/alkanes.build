@@ -17,60 +17,10 @@
   },
   "navigation": {
     "dashboard": "Bảng điều khiển",
-    "governance": "Quản trị",
     "forum": "Diễn đàn",
     "docs": "Tài liệu",
     "aries": "Aries",
     "github": "GitHub"
-  },
-  "home": {
-    "hero": {
-      "title": "ALKANES",
-      "subtitle": "Quản trị, kho lợi nhuận và tài liệu cho giao thức Alkanes trên Bitcoin. Stake, bỏ phiếu và định hình tương lai của DeFi Bitcoin.",
-      "viewProposals": "Xem đề xuất",
-      "readDocs": "Đọc tài liệu",
-      "getApiKey": "Nhận Khóa API"
-    },
-    "explore": {
-      "title": "Khám phá DIESEL",
-      "governance": {
-        "title": "Quản trị",
-        "description": "Bỏ phiếu cho đề xuất và định hình giao thức"
-      },
-      "forum": {
-        "title": "Diễn đàn",
-        "description": "Thảo luận đề xuất và ý tưởng cùng cộng đồng"
-      },
-      "docs": {
-        "title": "Tài liệu",
-        "description": "Học cách xây dựng với Alkanes"
-      },
-      "quickstart": {
-        "title": "Bắt đầu nhanh",
-        "description": "Triển khai hợp đồng thông minh đầu tiên"
-      }
-    },
-    "features": {
-      "title": "Tại sao chọn DIESEL?",
-      "security": {
-        "title": "Bảo mật Bitcoin",
-        "description": "Mọi trạng thái đều được neo vào Bitcoin. Không có sidechain, không có bridge — chỉ có Bitcoin thuần túy."
-      },
-      "wasm": {
-        "title": "Runtime WASM",
-        "description": "Viết hợp đồng thông minh bằng Rust, biên dịch sang WebAssembly, triển khai trên Bitcoin."
-      },
-      "governance": {
-        "title": "Quản trị cộng đồng",
-        "description": "Chủ sở hữu DIESEL bỏ phiếu cho các nâng cấp giao thức, phân bổ ngân quỹ và nhiều hơn nữa."
-      }
-    },
-    "cta": {
-      "title": "Sẵn sàng tham gia?",
-      "description": "Kết nối ví để bỏ phiếu cho đề xuất và stake token DIESEL của bạn.",
-      "viewProposals": "Xem đề xuất đang hoạt động",
-      "github": "Khám phá trên GitHub"
-    }
   },
   "landing": {
     "hero": {
@@ -136,10 +86,6 @@
         "title": "Terminal DIESEL",
         "body": "Công cụ tính chiến lược mint DIESEL."
       },
-      "governance": {
-        "title": "Quản trị",
-        "body": "Đề xuất và bỏ phiếu cho giao thức meta Alkanes."
-      },
       "forum": {
         "title": "Diễn đàn",
         "body": "Các chủ đề thảo luận về đề xuất và ý tưởng."
@@ -200,35 +146,6 @@
     "orbitals": {
       "line": "Aries Orbitals — bạn có thể mua tác phẩm nghệ thuật; bạn không thể mua bản ghi."
     }
-  },
-  "governance": {
-    "title": "Quản trị DIESEL",
-    "subtitle": "Bỏ phiếu cho đề xuất để định hình tương lai của Alkanes",
-    "createProposal": "Tạo đề xuất",
-    "filters": {
-      "all": "Tất cả",
-      "active": "Đang hoạt động",
-      "pending": "Đang chờ",
-      "closed": "Đã đóng"
-    },
-    "proposal": {
-      "by": "bởi",
-      "votes": "phiếu",
-      "vote": "phiếu",
-      "starts": "Bắt đầu",
-      "diesel": "{amount} DIESEL",
-      "for": "Ủng hộ",
-      "against": "Phản đối"
-    },
-    "states": {
-      "ACTIVE": "Đang hoạt động",
-      "PENDING": "Đang chờ",
-      "CLOSED": "Đã đóng",
-      "EXECUTED": "Đã thực thi",
-      "CANCELLED": "Đã hủy"
-    },
-    "noProposals": "Không tìm thấy đề xuất",
-    "error": "Không thể tải đề xuất"
   },
   "forum": {
     "title": "Thảo luận",
@@ -350,7 +267,6 @@
     "tagline": "Giao thức Alkanes",
     "links": {
       "documentation": "Tài liệu",
-      "governance": "Quản trị",
       "forum": "Diễn đàn",
       "github": "GitHub",
       "twitter": "Twitter",

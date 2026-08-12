@@ -8,7 +8,6 @@ import {
   Rocket,
   Sparkles,
   Terminal,
-  Vote,
 } from "lucide-react";
 import { BuilderSignupCard } from "@/components/landing/BuilderSignupCard";
 import { BUILDER_SIGNUP_OPEN } from "@/lib/featureFlags";
@@ -36,7 +35,6 @@ const TOOLS = [
   { key: "quickstart", icon: Rocket },
   { key: "cli", icon: Terminal },
   { key: "terminal", icon: Blocks },
-  { key: "governance", icon: Vote },
   { key: "forum", icon: MessageSquare },
 ] as const;
 

@@ -17,60 +17,10 @@
   },
   "navigation": {
     "dashboard": "대시보드",
-    "governance": "거버넌스",
     "forum": "포럼",
     "docs": "문서",
     "aries": "Aries",
     "github": "GitHub"
-  },
-  "home": {
-    "hero": {
-      "title": "ALKANES",
-      "subtitle": "비트코인 위 Alkanes 메타프로토콜의 거버넌스, 볼트, 그리고 문서. 스테이킹, 투표, 비트코인 DeFi의 미래를 함께 만들어갑니다.",
-      "viewProposals": "제안 보기",
-      "readDocs": "문서 읽기",
-      "getApiKey": "API 키 받기"
-    },
-    "explore": {
-      "title": "DIESEL 탐색하기",
-      "governance": {
-        "title": "거버넌스",
-        "description": "제안에 투표하고 프로토콜 방향을 결정하세요"
-      },
-      "forum": {
-        "title": "포럼",
-        "description": "커뮤니티와 제안 및 아이디어를 논의하세요"
-      },
-      "docs": {
-        "title": "문서",
-        "description": "Alkanes로 개발하는 방법을 배우세요"
-      },
-      "quickstart": {
-        "title": "빠른 시작",
-        "description": "첫 스마트 컨트랙트를 배포하세요"
-      }
-    },
-    "features": {
-      "title": "왜 DIESEL인가요?",
-      "security": {
-        "title": "비트코인 보안",
-        "description": "모든 상태가 비트코인에 앵커링됩니다. 사이드체인도, 브릿지도 없이 — 오직 비트코인만."
-      },
-      "wasm": {
-        "title": "WASM 런타임",
-        "description": "Rust로 스마트 컨트랙트를 작성하고, WebAssembly로 컴파일하여 비트코인에 배포합니다."
-      },
-      "governance": {
-        "title": "커뮤니티 거버넌스",
-        "description": "DIESEL 홀더가 프로토콜 업그레이드, 재무 배분 등을 투표로 결정합니다."
-      }
-    },
-    "cta": {
-      "title": "참여할 준비가 되셨나요?",
-      "description": "지갑을 연결하여 제안에 투표하고 DIESEL 토큰을 스테이킹하세요.",
-      "viewProposals": "활성 제안 보기",
-      "github": "GitHub에서 탐색하기"
-    }
   },
   "landing": {
     "hero": {
@@ -136,10 +86,6 @@
         "title": "DIESEL 터미널",
         "body": "DIESEL 민팅 전략 계산기."
       },
-      "governance": {
-        "title": "거버넌스",
-        "body": "Alkanes 메타프로토콜의 제안과 투표."
-      },
       "forum": {
         "title": "포럼",
         "body": "제안과 아이디어에 대한 토론 스레드."
@@ -200,35 +146,6 @@
     "orbitals": {
       "line": "Aries Orbitals — 예술은 살 수 있어도, 기록은 살 수 없습니다."
     }
-  },
-  "governance": {
-    "title": "DIESEL 거버넌스",
-    "subtitle": "제안에 투표하여 Alkanes의 미래를 결정하세요",
-    "createProposal": "제안 생성",
-    "filters": {
-      "all": "전체",
-      "active": "진행 중",
-      "pending": "대기 중",
-      "closed": "종료됨"
-    },
-    "proposal": {
-      "by": "제안자",
-      "votes": "표",
-      "vote": "표",
-      "starts": "시작",
-      "diesel": "{amount} DIESEL",
-      "for": "찬성",
-      "against": "반대"
-    },
-    "states": {
-      "ACTIVE": "진행 중",
-      "PENDING": "대기 중",
-      "CLOSED": "종료됨",
-      "EXECUTED": "실행됨",
-      "CANCELLED": "취소됨"
-    },
-    "noProposals": "제안을 찾을 수 없습니다",
-    "error": "제안을 불러오지 못했습니다"
   },
   "forum": {
     "title": "토론",
@@ -350,7 +267,6 @@
     "tagline": "Alkanes 메타프로토콜",
     "links": {
       "documentation": "문서",
-      "governance": "거버넌스",
       "forum": "포럼",
       "github": "GitHub",
       "twitter": "Twitter",

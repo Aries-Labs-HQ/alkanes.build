@@ -94,12 +94,6 @@ export function Header() {
                 {t("navigation.dashboard")}
               </Link>
               <Link
-                href="/governance"
-                className="text-[color:var(--sf-muted)] hover:text-[color:var(--sf-text)] transition-colors font-medium"
-              >
-                {t("navigation.governance")}
-              </Link>
-              <Link
                 href="/forum"
                 className="text-[color:var(--sf-muted)] hover:text-[color:var(--sf-text)] transition-colors font-medium"
               >

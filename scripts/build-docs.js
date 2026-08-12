@@ -87,7 +87,6 @@ function generateNavigation() {
       items: [
         { title: 'How Alkanes Work', href: '/docs/concepts/alkanes' },
         { title: 'Protorunes', href: '/docs/concepts/protorunes' },
-        { title: 'DIESEL Token', href: '/docs/concepts/diesel' },
       ],
     },
     {

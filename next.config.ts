@@ -17,6 +17,34 @@ const nextConfig: NextConfig = {
   // Enable standalone output for Docker deployment
   output: "standalone",
 
+  // Governance has moved to its canonical venue. See
+  // docs/aries-integration/STRIP-PLAN.md — no governance UI, API or data
+  // dependency remains in this codebase, and every entry point redirects.
+  //
+  // next-intl runs with localePrefix: 'always', so both the locale-prefixed
+  // and the bare form need covering. Redirects run before middleware, so an
+  // external destination bypasses the i18n layer cleanly.
+  async redirects() {
+    const PROPOSALS = "https://surtur.org/proposals";
+    // The locale is constrained to the five real ones: a bare `/:locale/` also
+    // matches `/api/...`, which would quietly swallow unrelated routes.
+    const LOCALE = "en|zh|ms|vi|ko";
+    return [
+      {
+        source: `/:locale(${LOCALE})/governance/:path*`,
+        destination: PROPOSALS,
+        permanent: true,
+      },
+      {
+        source: `/:locale(${LOCALE})/governance`,
+        destination: PROPOSALS,
+        permanent: true,
+      },
+      { source: "/governance/:path*", destination: PROPOSALS, permanent: true },
+      { source: "/governance", destination: PROPOSALS, permanent: true },
+    ];
+  },
+
   // Note: @alkanes/ts-sdk is NOT in serverExternalPackages
   // because we need webpack to resolve the alias for @alkanes/ts-sdk/wasm
 

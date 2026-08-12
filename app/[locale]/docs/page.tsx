@@ -25,8 +25,6 @@ const content = {
     conceptsTitle: "Key Concepts",
     protorunesTitle: "Protorunes",
     protorunesDesc: "Protorunes extend the Runes protocol with programmable functionality. Each Alkane is a special type of Protorune that contains executable WASM code.",
-    dieselTitle: "DIESEL Token",
-    dieselDesc: "DIESEL is the native governance token of the Alkanes ecosystem. It's used for voting on protocol upgrades, paying for gas (execution costs), and staking.",
     metashrewTitle: "Metashrew Indexer",
     metashrewDesc: "Metashrew is the indexing infrastructure that processes Bitcoin blocks and maintains Alkane state. It enables fast queries and real-time updates.",
     gettingStartedTitle: "Getting Started",
@@ -39,7 +37,7 @@ const content = {
     resources: [
       { text: "GitHub Repository", href: "https://github.com/kungfuflex/alkanes-rs/tree/develop", desc: "Source code and examples" },
       { text: "Subfrost API", href: "https://mainnet.sandshrew.io", desc: "Hosted indexer infrastructure" },
-      { text: "DIESEL Governance", href: "/governance", desc: "Participate in protocol governance" }
+      { text: "DIESEL Governance", href: "https://surtur.org/proposals", desc: "Participate in protocol governance" }
     ]
   },
   zh: {
@@ -63,8 +61,6 @@ const content = {
     conceptsTitle: "核心概念",
     protorunesTitle: "Protorunes",
     protorunesDesc: "Protorunes 扩展了 Runes 协议，增加了可编程功能。每个 Alkane 都是一种特殊的 Protorune，包含可执行的 WASM 代码。",
-    dieselTitle: "DIESEL 代币",
-    dieselDesc: "DIESEL 是 Alkanes 生态系统的原生治理代币。用于协议升级投票、支付 Gas（执行成本）和质押。",
     metashrewTitle: "Metashrew 索引器",
     metashrewDesc: "Metashrew 是处理比特币区块并维护 Alkane 状态的索引基础设施。它支持快速查询和实时更新。",
     gettingStartedTitle: "快速开始",
@@ -77,7 +73,7 @@ const content = {
     resources: [
       { text: "GitHub 代码库", href: "https://github.com/kungfuflex/alkanes-rs/tree/develop", desc: "源代码和示例" },
       { text: "Subfrost API", href: "https://mainnet.sandshrew.io", desc: "托管索引器基础设施" },
-      { text: "DIESEL 治理", href: "/governance", desc: "参与协议治理" }
+      { text: "DIESEL 治理", href: "https://surtur.org/proposals", desc: "参与协议治理" }
     ]
   },
   ms: {
@@ -101,8 +97,6 @@ const content = {
     conceptsTitle: "Konsep Utama",
     protorunesTitle: "Protorunes",
     protorunesDesc: "Protorunes memperluaskan protokol Runes dengan fungsi boleh atur cara. Setiap Alkane adalah jenis Protorune khas yang mengandungi kod WASM boleh laksana.",
-    dieselTitle: "Token DIESEL",
-    dieselDesc: "DIESEL adalah token tadbir urus asli ekosistem Alkanes. Ia digunakan untuk mengundi peningkatan protokol, membayar gas (kos pelaksanaan), dan staking.",
     metashrewTitle: "Pengindeks Metashrew",
     metashrewDesc: "Metashrew adalah infrastruktur pengindeksan yang memproses blok Bitcoin dan mengekalkan keadaan Alkane. Ia membolehkan pertanyaan pantas dan kemas kini masa nyata.",
     gettingStartedTitle: "Bermula",
@@ -115,7 +109,7 @@ const content = {
     resources: [
       { text: "Repositori GitHub", href: "https://github.com/kungfuflex/alkanes-rs/tree/develop", desc: "Kod sumber dan contoh" },
       { text: "API Subfrost", href: "https://mainnet.sandshrew.io", desc: "Infrastruktur pengindeks yang dihoskan" },
-      { text: "Tadbir Urus DIESEL", href: "/governance", desc: "Sertai tadbir urus protokol" }
+      { text: "Tadbir Urus DIESEL", href: "https://surtur.org/proposals", desc: "Sertai tadbir urus protokol" }
     ]
   },
   vi: {
@@ -139,8 +133,6 @@ const content = {
     conceptsTitle: "Khái Niệm Chính",
     protorunesTitle: "Protorunes",
     protorunesDesc: "Protorunes mở rộng giao thức Runes với chức năng có thể lập trình. Mỗi Alkane là một loại Protorune đặc biệt chứa mã WASM có thể thực thi.",
-    dieselTitle: "Token DIESEL",
-    dieselDesc: "DIESEL là token quản trị gốc của hệ sinh thái Alkanes. Nó được sử dụng để bỏ phiếu nâng cấp giao thức, trả phí gas (chi phí thực thi) và staking.",
     metashrewTitle: "Trình Lập Chỉ Mục Metashrew",
     metashrewDesc: "Metashrew là cơ sở hạ tầng lập chỉ mục xử lý các khối Bitcoin và duy trì trạng thái Alkane. Nó cho phép truy vấn nhanh và cập nhật thời gian thực.",
     gettingStartedTitle: "Bắt Đầu",
@@ -153,7 +145,7 @@ const content = {
     resources: [
       { text: "Kho GitHub", href: "https://github.com/kungfuflex/alkanes-rs/tree/develop", desc: "Mã nguồn và ví dụ" },
       { text: "API Subfrost", href: "https://mainnet.sandshrew.io", desc: "Cơ sở hạ tầng indexer được lưu trữ" },
-      { text: "Quản Trị DIESEL", href: "/governance", desc: "Tham gia quản trị giao thức" }
+      { text: "Quản Trị DIESEL", href: "https://surtur.org/proposals", desc: "Tham gia quản trị giao thức" }
     ]
   },
   ko: {
@@ -177,8 +169,6 @@ const content = {
     conceptsTitle: "핵심 개념",
     protorunesTitle: "Protorunes",
     protorunesDesc: "Protorunes는 프로그래밍 가능한 기능으로 Runes 프로토콜을 확장합니다. 각 Alkane은 실행 가능한 WASM 코드를 포함하는 특별한 유형의 Protorune입니다.",
-    dieselTitle: "DIESEL 토큰",
-    dieselDesc: "DIESEL은 Alkanes 생태계의 네이티브 거버넌스 토큰입니다. 프로토콜 업그레이드 투표, 가스(실행 비용) 지불 및 스테이킹에 사용됩니다.",
     metashrewTitle: "Metashrew 인덱서",
     metashrewDesc: "Metashrew는 Bitcoin 블록을 처리하고 Alkane 상태를 유지하는 인덱싱 인프라입니다. 빠른 쿼리와 실시간 업데이트를 가능하게 합니다.",
     gettingStartedTitle: "시작하기",
@@ -191,7 +181,7 @@ const content = {
     resources: [
       { text: "GitHub 저장소", href: "https://github.com/kungfuflex/alkanes-rs/tree/develop", desc: "소스 코드 및 예제" },
       { text: "Subfrost API", href: "https://mainnet.sandshrew.io", desc: "호스팅된 인덱서 인프라" },
-      { text: "DIESEL 거버넌스", href: "/governance", desc: "프로토콜 거버넌스 참여" }
+      { text: "DIESEL 거버넌스", href: "https://surtur.org/proposals", desc: "프로토콜 거버넌스 참여" }
     ]
   }
 };
@@ -233,11 +223,6 @@ export default function DocsIntroPage() {
           <div>
             <h3 className="text-xl font-medium mb-2">{t.protorunesTitle}</h3>
             <p className="text-[color:var(--sf-muted)]">{t.protorunesDesc}</p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-medium mb-2">{t.dieselTitle}</h3>
-            <p className="text-[color:var(--sf-muted)]">{t.dieselDesc}</p>
           </div>
 
           <div>
