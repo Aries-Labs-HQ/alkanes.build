@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const content = {
   en: {
@@ -977,14 +978,14 @@ jobs:
       <Section title={t.nextStepsTitle} id="next-steps">
         <div className="grid gap-4 md:grid-cols-3">
           {t.nextSteps.map((step, i) => (
-            <a
+            <Link
               key={i}
               href={step.href}
               className="p-4 rounded-lg border border-[color:var(--sf-outline)] hover:border-[color:var(--sf-primary)] transition-colors"
             >
               <h4 className="font-semibold text-[color:var(--sf-text)] mb-1">{step.text}</h4>
               <p className="text-sm text-[color:var(--sf-muted)]">{step.desc}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </Section>

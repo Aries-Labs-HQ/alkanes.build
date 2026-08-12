@@ -13,7 +13,9 @@ export default defineConfig({
     environment: "happy-dom",
     server: {
       deps: {
-        inline: ['@alkanes/ts-sdk'],
+        // next-intl must be transformed so the `next/navigation` alias below
+        // applies inside it; pnpm does not link `next` into its nested tree.
+        inline: ['@alkanes/ts-sdk', 'next-intl'],
       },
     },
     globals: true,
@@ -73,6 +75,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      // pnpm's strict layout means next-intl's nested node_modules has no link
+      // to `next`, so its client navigation module cannot resolve
+      // "next/navigation" on its own. Point it at the hoisted copy so tests can
+      // exercise the locale-aware Link/router.
+      "next/navigation": path.resolve(__dirname, "./node_modules/next/navigation.js"),
       "@": path.resolve(__dirname, "./"),
       "@alkanes/ts-sdk/wasm": path.resolve(__dirname, "./node_modules/@alkanes/ts-sdk/wasm/index.js"),
       "@alkanes/ts-sdk": path.resolve(__dirname, "./node_modules/@alkanes/ts-sdk/dist/index.mjs"),

@@ -284,14 +284,25 @@ export default function DocsIntroPage() {
         <ul className="space-y-2">
           {t.resources.map((resource, i) => (
             <li key={i}>
-              <a
-                href={resource.href}
-                target={resource.href.startsWith("http") ? "_blank" : undefined}
-                rel={resource.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="text-[color:var(--sf-primary)] hover:underline"
-              >
-                {resource.text}
-              </a>
+              {/* Internal targets go through the locale-aware Link so a reader
+                  on /ko stays on /ko. External ones stay a plain anchor. */}
+              {resource.href.startsWith("http") ? (
+                <a
+                  href={resource.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[color:var(--sf-primary)] hover:underline"
+                >
+                  {resource.text}
+                </a>
+              ) : (
+                <Link
+                  href={resource.href}
+                  className="text-[color:var(--sf-primary)] hover:underline"
+                >
+                  {resource.text}
+                </Link>
+              )}
               {" - "}{resource.desc}
             </li>
           ))}

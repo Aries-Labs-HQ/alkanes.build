@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BottomNav } from "@/components/BottomNav";
@@ -9,11 +9,13 @@ import { BottomNav } from "@/components/BottomNav";
 const BARE_ROUTES = ["/terminal"];
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
+  // next-intl's usePathname returns the path WITHOUT the locale segment, which
+  // is exactly what this comparison wants. The previous version read the raw
+  // pathname from next/navigation and stripped the locale with /^\/[a-z]{2}/ —
+  // a hand-rolled stand-in that also ate any future two-letter first segment
+  // that was not a locale, and would not have survived a tag like `zh-Hans`.
   const pathname = usePathname();
-
-  // Strip locale prefix (e.g. "/en/terminal" → "/terminal")
-  const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, "") || "/";
-  const isBare = BARE_ROUTES.some((r) => pathWithoutLocale.startsWith(r));
+  const isBare = BARE_ROUTES.some((r) => pathname.startsWith(r));
 
   if (isBare) {
     return <>{children}</>;

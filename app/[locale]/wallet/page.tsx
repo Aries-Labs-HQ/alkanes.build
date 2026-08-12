@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Copy, Check, Download, Cloud, AlertTriangle, Shield, ExternalLink, RefreshCw } from "lucide-react";
 
 import { useWallet } from "@/context/WalletContext";

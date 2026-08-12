@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const content = {
   en: {
@@ -340,9 +341,9 @@ alkane!(MyAlkane);`}</CodeBlock>
         <ul className="space-y-2">
           {t.nextSteps.map((step, i) => (
             <li key={i}>
-              <a href={step.href} className="text-[color:var(--sf-primary)] hover:underline">
+              <Link href={step.href} className="text-[color:var(--sf-primary)] hover:underline">
                 {step.text}
-              </a>
+              </Link>
               {" - "}{step.desc}
             </li>
           ))}

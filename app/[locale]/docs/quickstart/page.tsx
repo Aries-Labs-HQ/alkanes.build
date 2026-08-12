@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const content = {
   en: {
@@ -323,9 +324,9 @@ alkanes-cli -p signet alkanes view "[2,1]" "2"`}</CodeBlock>
         <ul className="list-disc list-inside space-y-2 text-[color:var(--sf-muted)]">
           {t.nextSteps.map((step, i) => (
             <li key={i}>
-              <a href={step.href} className="text-[color:var(--sf-primary)] hover:underline">
+              <Link href={step.href} className="text-[color:var(--sf-primary)] hover:underline">
                 {step.text}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

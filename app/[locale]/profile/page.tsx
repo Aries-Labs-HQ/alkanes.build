@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Save, User, Camera, Loader2, Check, X } from "lucide-react";
 
@@ -31,7 +30,6 @@ interface UserProfile {
 
 export default function ProfilePage() {
   const t = useTranslations();
-  const router = useRouter();
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
