@@ -44,6 +44,10 @@ export const SIGNING_VERSION = "v1";
 export const SIGNING_ACTIONS = {
   /** Prove control of a Bitcoin address for a forum profile. */
   PROFILE_VERIFY: "profile:verify",
+  /** Change the display name, bio or avatar URL on your own profile. */
+  PROFILE_UPDATE: "profile:update",
+  /** Replace the avatar image on your own profile. */
+  PROFILE_AVATAR: "profile:avatar",
   /** Change a discussion's moderation state (lock / pin / hide / title). */
   THREAD_MODERATE: "thread:moderate",
   /** Edit an existing forum post. */
@@ -199,6 +203,8 @@ export function buildSigningMessage(input: SigningMessageInput): string {
 export const ACTION_DESCRIPTIONS: Record<SigningAction, string> = {
   [SIGNING_ACTIONS.PROFILE_VERIFY]:
     "Prove you control this address, so your forum profile can show as verified.",
+  [SIGNING_ACTIONS.PROFILE_UPDATE]: "Update your profile details.",
+  [SIGNING_ACTIONS.PROFILE_AVATAR]: "Replace your profile picture.",
   [SIGNING_ACTIONS.THREAD_MODERATE]:
     "Change the moderation state of this discussion.",
   [SIGNING_ACTIONS.POST_EDIT]: "Edit this post.",

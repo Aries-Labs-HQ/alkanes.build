@@ -1,5 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createHash } from "crypto";
 import { prisma } from "@/lib/prisma";
+import { verifySignedAction } from "@/lib/request-auth";
+import { SIGNING_ACTIONS } from "@/lib/signing-message";
+
+/**
+ * Bind a signature to the exact value being stored, without putting a 500-char
+ * bio — which may hold newlines or non-ASCII — inside a one-line message field.
+ * `null` and the empty string are distinguished, so clearing a field is a
+ * different signature from leaving it alone.
+ */
+function fieldDigest(value: string | null): string {
+  return value === null
+    ? "null"
+    : createHash("sha256").update(value, "utf8").digest("hex");
+}
 
 /**
  * GET /api/profile
@@ -125,6 +140,34 @@ export async function POST(request: NextRequest) {
       ? displayName.trim().replace(/[<>]/g, "")
       : null;
 
+    const normalizedBio = bio?.trim() || null;
+    const normalizedAvatarUrl = avatarUrl || null;
+
+    // Authorise before writing anything.
+    //
+    // Identity used to be the `address` field of this very request, so anyone
+    // could rewrite anyone's profile just by naming them — including profiles
+    // /api/profile/verify had marked verified. The signature is bound to the
+    // exact values being stored, so an intercepted one cannot be replayed with
+    // different content.
+    const auth = await verifySignedAction({
+      action: SIGNING_ACTIONS.PROFILE_UPDATE,
+      address,
+      signature: body?.signature,
+      issuedAt: body?.issuedAt,
+      nonce: body?.nonce,
+      resource: `address:${address}`,
+      params: {
+        displayNameSha256: fieldDigest(sanitizedDisplayName),
+        bioSha256: fieldDigest(normalizedBio),
+        avatarUrlSha256: fieldDigest(normalizedAvatarUrl),
+      },
+    });
+
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
+    }
+
     // Try to upsert profile
     try {
       const profile = await prisma.userProfile.upsert({
@@ -132,14 +175,14 @@ export async function POST(request: NextRequest) {
         create: {
           address,
           displayName: sanitizedDisplayName,
-          bio: bio?.trim() || null,
-          avatarUrl: avatarUrl || null,
+          bio: normalizedBio,
+          avatarUrl: normalizedAvatarUrl,
           lastSeenAt: new Date(),
         },
         update: {
           displayName: sanitizedDisplayName,
-          bio: bio?.trim() || null,
-          avatarUrl: avatarUrl || null,
+          bio: normalizedBio,
+          avatarUrl: normalizedAvatarUrl,
           lastSeenAt: new Date(),
         },
         select: {

@@ -41,7 +41,14 @@ vi.mock("@/lib/prisma", () => ({
 }));
 
 // Import after mocking
+import { createHash } from "crypto";
 import { POST } from "@/app/api/profile/avatar/route";
+import { buildSigningMessage, SIGNING_ACTIONS } from "@/lib/signing-message";
+import { p2trWallet, testNonce } from "../../helpers/bip322-signer";
+
+// The route now requires a BIP-322 signature by the address being changed, so
+// these tests need a real key rather than a placeholder string.
+const wallet = p2trWallet("c3".repeat(32));
 
 // Helper to create a mock file
 const createMockFile = (
@@ -49,18 +56,44 @@ const createMockFile = (
   type: string,
   size: number
 ): File => {
-  const blob = new Blob([new ArrayBuffer(size)], { type });
-  return new File([blob], name, { type });
+  const bytes = Buffer.alloc(size);
+  const file = new File([new Uint8Array(bytes)], name, { type });
+  // Keep the bytes to hand so the request helper can bind a signature to them.
+  (file as unknown as { __bytes: Buffer }).__bytes = bytes;
+  return file;
 };
 
-// Helper to create FormData request
+// Helper to create FormData request. Signs by default: the interesting cases
+// here are the non-auth ones, and an unsigned request never reaches them.
 const createFormDataRequest = (
   file: File | null,
-  address: string | null
+  address: string | null,
+  { sign = true }: { sign?: boolean } = {}
 ): NextRequest => {
   const formData = new FormData();
   if (file) formData.append("file", file);
   if (address) formData.append("address", address);
+
+  if (sign && file && address) {
+    const issuedAt = Date.now();
+    const nonce = testNonce("2");
+    // The signature is bound to the bytes, so it has to be built from them.
+    const bytes = (file as unknown as { __bytes?: Buffer }).__bytes ?? Buffer.alloc(0);
+    const message = buildSigningMessage({
+      action: SIGNING_ACTIONS.PROFILE_AVATAR,
+      address,
+      resource: `address:${address}`,
+      params: {
+        contentSha256: createHash("sha256").update(bytes).digest("hex"),
+        contentType: file.type,
+      },
+      issuedAt,
+      nonce,
+    });
+    formData.append("signature", wallet.sign(message));
+    formData.append("nonce", nonce);
+    formData.append("issuedAt", String(issuedAt));
+  }
 
   return new NextRequest("http://localhost/api/profile/avatar", {
     method: "POST",
@@ -98,7 +131,7 @@ describe("POST /api/profile/avatar", () => {
 
   it("returns 400 for invalid file type", async () => {
     const file = createMockFile("document.pdf", "application/pdf", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
@@ -112,7 +145,7 @@ describe("POST /api/profile/avatar", () => {
       "image/jpeg",
       3 * 1024 * 1024 // 3MB
     );
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
@@ -122,17 +155,18 @@ describe("POST /api/profile/avatar", () => {
 
   it("successfully uploads a JPEG image", async () => {
     const file = createMockFile("avatar.jpg", "image/jpeg", 1024);
-    const request = createFormDataRequest(file, "bc1ptest123");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
     expect(response.status).toBe(200);
-    // Filename format: ${address.slice(0, 16)}-${Date.now()}.${ext}
-    expect(data.url).toMatch(/^\/uploads\/avatars\/bc1ptest123-\d+\.jpg$/);
+    // Filename is now `${sha256(address).slice(0,16)}-${Date.now()}.${ext}` —
+    // the address no longer reaches the path.
+    expect(data.url).toMatch(/^\/uploads\/avatars\/[0-9a-f]{16}-\d+\.jpg$/);
     expect(mockWriteFile).toHaveBeenCalled();
     expect(mockUpsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { address: "bc1ptest123" },
+        where: { address: wallet.address },
         update: expect.objectContaining({
           avatarUrl: expect.stringMatching(/^\/uploads\/avatars\//),
         }),
@@ -142,7 +176,7 @@ describe("POST /api/profile/avatar", () => {
 
   it("successfully uploads a PNG image", async () => {
     const file = createMockFile("avatar.png", "image/png", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
@@ -152,7 +186,7 @@ describe("POST /api/profile/avatar", () => {
 
   it("successfully uploads a GIF image", async () => {
     const file = createMockFile("avatar.gif", "image/gif", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
@@ -162,7 +196,7 @@ describe("POST /api/profile/avatar", () => {
 
   it("successfully uploads a WebP image", async () => {
     const file = createMockFile("avatar.webp", "image/webp", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
@@ -174,7 +208,7 @@ describe("POST /api/profile/avatar", () => {
     mockExistsSync.mockReturnValue(false);
 
     const file = createMockFile("avatar.jpg", "image/jpeg", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     await POST(request);
 
     expect(mockMkdir).toHaveBeenCalledWith(
@@ -187,7 +221,7 @@ describe("POST /api/profile/avatar", () => {
     mockExistsSync.mockReturnValue(true);
 
     const file = createMockFile("avatar.jpg", "image/jpeg", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     await POST(request);
 
     expect(mockMkdir).not.toHaveBeenCalled();
@@ -197,7 +231,7 @@ describe("POST /api/profile/avatar", () => {
     mockWriteFile.mockRejectedValueOnce(new Error("Write failed"));
 
     const file = createMockFile("avatar.jpg", "image/jpeg", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
@@ -209,7 +243,7 @@ describe("POST /api/profile/avatar", () => {
     mockUpsert.mockRejectedValueOnce(new Error("Database error"));
 
     const file = createMockFile("avatar.jpg", "image/jpeg", 1024);
-    const request = createFormDataRequest(file, "bc1ptest");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
@@ -217,14 +251,14 @@ describe("POST /api/profile/avatar", () => {
     expect(data.error).toBe("Failed to upload avatar");
   });
 
-  it("generates unique filename with address prefix and timestamp", async () => {
+  it("derives the filename from a hash of the address, never the address itself", async () => {
     const file = createMockFile("avatar.jpg", "image/jpeg", 1024);
-    const request = createFormDataRequest(file, "bc1ptest123456789");
+    const request = createFormDataRequest(file, wallet.address);
     const response = await POST(request);
     const data = await response.json();
 
     expect(response.status).toBe(200);
-    // Filename uses first 16 chars of address: bc1ptest12345678
-    expect(data.url).toMatch(/^\/uploads\/avatars\/bc1ptest12345678-\d+\.jpg$/);
+    expect(data.url).toMatch(/^\/uploads\/avatars\/[0-9a-f]{16}-\d+\.jpg$/);
+    expect(data.url).not.toContain(wallet.address);
   });
 });

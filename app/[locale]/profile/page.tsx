@@ -13,6 +13,29 @@ import {
   SIGNING_ACTIONS,
 } from "@/lib/signing-message";
 
+/**
+ * SHA-256, hex, matching what the route computes server-side.
+ *
+ * The signed message binds a digest rather than the value itself: a bio can run
+ * to 500 characters and carry newlines or non-ASCII, none of which fit in a
+ * one-line canonical field.
+ */
+async function sha256Hex(data: ArrayBuffer | string): Promise<string> {
+  const bytes: ArrayBuffer =
+    typeof data === "string"
+      ? (new TextEncoder().encode(data).buffer as ArrayBuffer)
+      : data;
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/** `null` is distinct from "", so clearing a field is its own signature. */
+async function fieldDigest(value: string | null): Promise<string> {
+  return value === null ? "null" : sha256Hex(value);
+}
+
 interface UserProfile {
   id: string;
   address: string;
@@ -111,7 +134,7 @@ export default function ProfilePage() {
   };
 
   const handleSave = async () => {
-    if (!address) return;
+    if (!address || !signMessage) return;
 
     setIsSaving(true);
     setSaveError(null);
@@ -120,11 +143,31 @@ export default function ProfilePage() {
     try {
       let avatarUrl = avatarPreview;
 
-      // Upload avatar if changed
+      // Upload avatar if changed. The signature is bound to the bytes, so the
+      // server accepts this image for this address and no other.
       if (avatarFile) {
+        const bytes = await avatarFile.arrayBuffer();
+        const issuedAt = Date.now();
+        const nonce = newNonce();
+        const message = buildSigningMessage({
+          action: SIGNING_ACTIONS.PROFILE_AVATAR,
+          address,
+          resource: `address:${address}`,
+          params: {
+            contentSha256: await sha256Hex(bytes),
+            contentType: avatarFile.type,
+          },
+          issuedAt,
+          nonce,
+        });
+        const signature = await signMessage(message);
+
         const formData = new FormData();
         formData.append("file", avatarFile);
         formData.append("address", address);
+        formData.append("signature", signature);
+        formData.append("nonce", nonce);
+        formData.append("issuedAt", String(issuedAt));
 
         const uploadRes = await fetch("/api/profile/avatar", {
           method: "POST",
@@ -140,7 +183,28 @@ export default function ProfilePage() {
         avatarUrl = url;
       }
 
-      // Update profile
+      // Update profile. Bound to the exact values being stored, so the same
+      // signature cannot be replayed with different details.
+      const nextDisplayName = displayName ? displayName.trim().replace(/[<>]/g, "") : null;
+      const nextBio = bio?.trim() || null;
+      const nextAvatarUrl = avatarUrl || null;
+
+      const issuedAt = Date.now();
+      const nonce = newNonce();
+      const message = buildSigningMessage({
+        action: SIGNING_ACTIONS.PROFILE_UPDATE,
+        address,
+        resource: `address:${address}`,
+        params: {
+          displayNameSha256: await fieldDigest(nextDisplayName),
+          bioSha256: await fieldDigest(nextBio),
+          avatarUrlSha256: await fieldDigest(nextAvatarUrl),
+        },
+        issuedAt,
+        nonce,
+      });
+      const signature = await signMessage(message);
+
       const res = await fetch("/api/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -149,6 +213,9 @@ export default function ProfilePage() {
           displayName: displayName || null,
           bio: bio || null,
           avatarUrl,
+          signature,
+          nonce,
+          issuedAt,
         }),
       });
 

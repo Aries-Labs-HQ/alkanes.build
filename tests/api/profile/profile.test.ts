@@ -20,8 +20,53 @@ vi.mock("@/lib/prisma", () => {
 });
 
 // Import after mocking
+import { createHash } from "crypto";
 import { GET, POST } from "@/app/api/profile/route";
 import { prisma } from "@/lib/prisma";
+import { buildSigningMessage, SIGNING_ACTIONS } from "@/lib/signing-message";
+import { p2trWallet, testNonce } from "../../helpers/bip322-signer";
+
+// POST now requires a BIP-322 signature by the address being changed, so these
+// tests need a real key rather than a placeholder string.
+const wallet = p2trWallet("d4".repeat(32));
+
+const digest = (v: string | null) =>
+  v === null ? "null" : createHash("sha256").update(v, "utf8").digest("hex");
+
+/** Build a signed POST body, applying exactly the route's normalisation. */
+function signedProfilePost(fields: {
+  displayName?: string | null;
+  bio?: string | null;
+  avatarUrl?: string | null;
+}) {
+  const issuedAt = Date.now();
+  const nonce = testNonce("1");
+  const message = buildSigningMessage({
+    action: SIGNING_ACTIONS.PROFILE_UPDATE,
+    address: wallet.address,
+    resource: `address:${wallet.address}`,
+    params: {
+      displayNameSha256: digest(
+        fields.displayName ? fields.displayName.trim().replace(/[<>]/g, "") : null
+      ),
+      bioSha256: digest(fields.bio?.trim() || null),
+      avatarUrlSha256: digest(fields.avatarUrl || null),
+    },
+    issuedAt,
+    nonce,
+  });
+
+  return new NextRequest("http://localhost/api/profile", {
+    method: "POST",
+    body: JSON.stringify({
+      address: wallet.address,
+      ...fields,
+      signature: wallet.sign(message),
+      issuedAt,
+      nonce,
+    }),
+  });
+}
 
 // Cast to mocks for typing
 const mockFindUnique = prisma.userProfile.findUnique as ReturnType<typeof vi.fn>;
@@ -185,14 +230,7 @@ describe("POST /api/profile", () => {
 
     mockUpsert.mockResolvedValueOnce(mockProfile);
 
-    const request = new NextRequest("http://localhost/api/profile", {
-      method: "POST",
-      body: JSON.stringify({
-        address: "bc1ptest",
-        displayName: "New User",
-        bio: "My bio",
-      }),
-    });
+    const request = signedProfilePost({ displayName: "New User", bio: "My bio" });
     const response = await POST(request);
     const data = await response.json();
 
@@ -201,7 +239,7 @@ describe("POST /api/profile", () => {
     expect(data.displayName).toBe("New User");
     expect(mockUpsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { address: "bc1ptest" },
+        where: { address: wallet.address },
       })
     );
   });
@@ -224,13 +262,7 @@ describe("POST /api/profile", () => {
 
     mockUpsert.mockResolvedValueOnce(mockProfile);
 
-    const request = new NextRequest("http://localhost/api/profile", {
-      method: "POST",
-      body: JSON.stringify({
-        address: "bc1ptest",
-        displayName: "<script>alert(1)</script>",
-      }),
-    });
+    const request = signedProfilePost({ displayName: "<script>alert(1)</script>" });
     await POST(request);
 
     expect(mockUpsert).toHaveBeenCalledWith(
@@ -245,13 +277,7 @@ describe("POST /api/profile", () => {
   it("returns 503 when database is unavailable", async () => {
     mockUpsert.mockRejectedValueOnce(new Error("Connection failed"));
 
-    const request = new NextRequest("http://localhost/api/profile", {
-      method: "POST",
-      body: JSON.stringify({
-        address: "bc1ptest",
-        displayName: "Test",
-      }),
-    });
+    const request = signedProfilePost({ displayName: "Test" });
     const response = await POST(request);
     const data = await response.json();
 
@@ -277,13 +303,9 @@ describe("POST /api/profile", () => {
 
     mockUpsert.mockResolvedValueOnce(mockProfile);
 
-    const request = new NextRequest("http://localhost/api/profile", {
-      method: "POST",
-      body: JSON.stringify({
-        address: "bc1ptest",
-        displayName: "  Trimmed Name  ",
-        bio: "  Trimmed bio  ",
-      }),
+    const request = signedProfilePost({
+      displayName: "  Trimmed Name  ",
+      bio: "  Trimmed bio  ",
     });
     await POST(request);
 
